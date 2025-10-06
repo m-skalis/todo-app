@@ -1,0 +1,80 @@
+/* Beautiful FilterTodos Styling */
+.filter-container {
+  max-width: 600px;
+  margin: 0 auto 2rem auto;
+  padding: 0 1rem;
+}
+
+.filter-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.filter-icon {
+  position: absolute;
+  left: 1rem;
+  color: #999;
+  font-size: 1.2rem;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+.filter-input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 2px solid #e1e5e9;
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #333;
+  background: white;
+  transition: all 0.3s ease;
+  outline: none;
+  box-sizing: border-box;
+  font-family: inherit;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.filter-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1), 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.filter-input:focus + .filter-icon,
+.filter-wrapper:focus-within .filter-icon {
+  color: #667eea;
+}
+
+.filter-input::placeholder {
+  color: #999;
+  font-weight: 400;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .filter-container {
+    margin: 0 auto 1.5rem auto;
+    padding: 0 0.5rem;
+  }
+
+  .filter-input {
+    font-size: 0.95rem;
+    padding: 0.875rem 0.875rem 0.875rem 2.75rem;
+  }
+
+  .filter-icon {
+    font-size: 1.1rem;
+    left: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-input {
+    padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+  }
+
+  .filter-icon {
+    left: 0.75rem;
+  }
+}

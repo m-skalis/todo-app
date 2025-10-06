@@ -1,0 +1,4218 @@
+diff --git a/LEARNING_GUIDE.md b/LEARNING_GUIDE.md
+new file mode 100644
+index 0000000..9d33255
+--- /dev/null
++++ b/LEARNING_GUIDE.md
+@@ -0,0 +1,191 @@
++# 🎓 Learning Guide - Understanding Your Enhanced Todo App
++
++## 🚀 Welcome to Your Learning Journey!
++
++Congratulations on building your first React todo app! 🎉 This guide will help you understand all the cool new features we've added and how they work together.
++
++---
++
++## 📚 Chapter 1: Understanding Ant Design
++
++### What is Ant Design?
++
++Ant Design (antd) is like having a **professional designer** on your team! It's a library of pre-built, beautiful React components that you can use in your projects.
++
++### Why Use Ant Design?
++
++- ⚡ **Saves time** - No need to build buttons, forms, icons from scratch
++- 🎨 **Consistent design** - Everything looks professional and cohesive
++- 📱 **Mobile-friendly** - Components work great on all devices
++- 🔧 **Well-tested** - Used by thousands of developers worldwide
++
++### Icons - Your New Superpowers! 🦸‍♂️
++
++Instead of using emojis or creating custom icons, Ant Design gives you **hundreds of professional icons**:
++
++```jsx
++// Old way (boring):
++<button>Delete</button>;
++
++// New way (awesome!):
++import { DeleteOutlined } from '@ant-design/icons';
++<button>
++  <DeleteOutlined /> Delete
++</button>;
++```
++
++**Icon Categories:**
++
++- `Outlined` - Line-style icons (most common)
++- `Filled` - Solid icons for emphasis
++- `TwoTone` - Two-color icons for special cases
++
++**Examples in your app:**
++
++```jsx
++import {
++  CheckCircleOutlined, // ✅ For completed todos
++  ClockCircleOutlined, // 🕐 For pending todos
++  DeleteOutlined, // 🗑️ For delete buttons
++  EditOutlined, // ✏️ For edit actions
++  SearchOutlined, // 🔍 For search
++  StarFilled, // ⭐ For favorites
++  RocketOutlined, // 🚀 For call-to-action
++} from '@ant-design/icons';
++```
++
++## check this!!!
++
++https://ant.design/components/icon
++
++---
++
++## 📚 Chapter 2: React Router - Building Multi-Page Apps
++
++### What Problem Does Router Solve?
++
++**Before Router:**
++
++- Everything in one page
++- Hard to organize large apps
++- Can't bookmark specific sections
++- Not great for SEO
++
++**After Router:**
++
++- Multiple organized pages
++- Users can bookmark `/todos` or `/about`
++- Better organization
++- Professional app structure
++
++### How Router Works - The Magic Explained! ✨
++
++```jsx
++// 1. Wrap your app in a Router
++import { BrowserRouter as Router } from 'react-router-dom';
++
++<Router>
++  <YourApp />
++</Router>;
++
++// 2. Define your routes
++import { Routes, Route } from 'react-router-dom';
++
++<Routes>
++  <Route path="/" element={<HomePage />} /> // example.com/
++  <Route path="/todos" element={<TodosPage />} /> // example.com/todos
++  <Route path="/about" element={<AboutPage />} /> // example.com/about
++</Routes>;
++
++// 3. Navigate between pages
++import { Link } from 'react-router-dom';
++
++<Link to="/todos">Go to Todos</Link>; // Creates clickable links
++```
++
++### Understanding the Navigation Component
++
++```jsx
++// Check which page you're on
++import { useLocation } from 'react-router-dom';
++
++const location = useLocation();
++console.log(location.pathname); // "/todos" when on todos page
++
++// Highlight active page
++className={`nav-link ${location.pathname === item.path ? 'active' : ''}`}
++```
++
++---
++
++## 📚 Chapter 4: CSS Architecture & Design
++
++### CSS Organization Strategy
++
++**Component-Based CSS:**
++
++```
++components/
++├── Header/
++│   ├── Header.jsx
++│   └── Header.css    ← Styles only for Header
++├── TodoForm/
++│   ├── TodoForm.jsx
++│   └── TodoForm.css  ← Styles only for TodoForm
++```
++
++**Why This Is Great:**
++
++- ✅ Easy to find styles for each component
++- ✅ No style conflicts between components
++- ✅ Easy to maintain and update
++
++---
++
++## YOU DO NEED THIS YET
++
++## 📚 Chapter 5: Advanced Features Explained
++
++### Pagination - Handling Large Lists
++
++**The Problem:**
++
++- 1000 todos would make the page very slow
++- Hard to find specific todos
++- Bad user experience
++
++**The Solution - Pagination:**
++
++```jsx
++const todosPerPage = 10;
++const currentPage = 1;
++
++//you should NOT be reading this - i know you are though xDDDD
++// Calculate which todos to show
++const startIndex = (currentPage - 1) * todosPerPage; // 0
++const endIndex = startIndex + todosPerPage; // 10
++const currentTodos = todos.slice(startIndex, endIndex); // First 10 todos
++```
++
++**Why This Is Smart:**
++
++- ✅ Only shows 10 todos at a time
++- ✅ Fast rendering even with 1000+ todos
++- ✅ Easy navigation between pages
++- ✅ Professional user experience
++
++## 🚀 Chapter 6: Next Steps & Challenges
++
++### Improvements the interviews want to see
++
++1. add redux toolkit (redux is a state manager - redux toolkit is redux on steroids)
++2. fetch from an api!!
++
++3. => https://jsonplaceholder.typicode.com/
++4. => https://redux-toolkit.js.org/
++
++### Learning Resources
++
++**Free Resources:**
++
++**Remember: Every expert was once a beginner. You're doing great! 🌟**
+diff --git a/README.md b/README.md
+index de85dbe..6191714 100644
+--- a/README.md
++++ b/README.md
+@@ -1,51 +1,341 @@
+-## 📝 Simple To-Do App
++# 🎉 TodoMaster - Beautiful & Modern Todo App
+ 
+-A minimal to-do list built with React.
+-Users can add new tasks and delete them from the list, as well as change their order.
+-Tasks are added to (and removed from) the local storage.
++## 👏 Great Job Getting Started!
+ 
+-### 🚀 Features
++Hey there! First off, **congratulations** on building your todo app! 🎊 You've created something really cool, and now we've enhanced it with some modern features and beautiful design patterns that will help you learn more about React development.
+ 
+-✅ Add new todos 
++This enhanced version includes **routing**, **beautiful UI components**, **modern design patterns**, and **professional code organization**. Don't worry if some concepts seem new - we'll explain everything step by step!
+ 
+-✅ Delete existing todos
++---
+ 
+-✅ Reorder todos
++## 🌟 What's New & Exciting
+ 
+-✅ Filter todos
++### ✨ **Enhanced Features**
+ 
+-✅ Responsive, single-page design
++- 🏠 **Multi-page Navigation** - Home, Todos, and About pages
++- 🎨 **Beautiful UI** with Ant Design components and icons
++- 📱 **Fully Responsive** design that looks great on any device
++- 📄 **Pagination** - Shows 10 todos per page with smooth navigation
++- 🔍 **Enhanced Search** with beautiful search interface
++- 🗑️ **Clear All** button with localStorage cleanup
++- ⭐ **Animated Components** with hover effects and transitions
++- 🎯 **Professional Layout** with sticky navigation and modern cards
+ 
+-🔶 Editable todos -> currently n/a
++### 🛠️ **New Technologies & Concepts**
+ 
+-#### 🛠️ Built With
++#### 📦 **Ant Design (antd) - Your New Best Friend!**
+ 
+-HTML, CSS, Reactjs (using vite)
++Ant Design is a **popular React UI library** that provides pre-built, beautiful components. Think of it as having a designer on your team!
+ 
+-### 💻 Run Locally
++**What you get with Ant Design:**
+ 
++- 🎨 **Pre-built components** (buttons, inputs, icons, etc.)
++- 🔧 **Consistent design** across your entire app
++- 📱 **Mobile-friendly** components out of the box
++- ⚡ **Saves development time** - no need to style everything from scratch
++
++**Icons in Ant Design:**
++
++```jsx
++import {
++  CheckCircleOutlined, // ✅ Checkmark icon
++  DeleteOutlined, // 🗑️ Delete icon
++  EditOutlined, // ✏️ Edit icon
++  StarFilled, // ⭐ Star icon
++  SearchOutlined, // 🔍 Search icon
++} from '@ant-design/icons';
++
++// Use them like this:
++<CheckCircleOutlined className="my-icon" />;
++```
++
++**Pro Tip:** Ant Design has **hundreds of icons**! Browse them at: [Ant Design Icons](https://ant.design/components/icon)
++
++#### 🛣️ **React Router - Multiple Pages Made Easy!**
++
++React Router lets you create **multi-page applications** in React. Instead of one giant component, you can organize your app into logical pages!
++
++**How it works:**
++
++```jsx
++import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
++
++<Router>
++  <Routes>
++    <Route path="/" element={<HomePage />} /> // Home page
++    <Route path="/todos" element={<TodosPage />} /> // Todos page
++    <Route path="/about" element={<AboutPage />} /> // About page
++  </Routes>
++</Router>;
++```
++
++**Navigation between pages:**
++
++```jsx
++import { Link } from 'react-router-dom';
++
++<Link to="/todos">Go to Todos</Link>; // Creates a clickable link
++```
++
++---
++
++## 🚀 **Features Overview**
++
++### ✅ **Core Todo Features**
++
++- ➕ Add new todos with beautiful form
++- ✅ Mark todos as complete/incomplete
++- 🗑️ Delete individual todos
++- ⬆️⬇️ Reorder todos with up/down buttons
++- 🔍 Search/filter todos in real-time
++- 🧹 Clear all todos (including localStorage)
++
++### 📱 **User Experience Features**
++
++- 🏠 **Landing page** with hero section and features
++- 📊 **Todo statistics** (total tasks, completed count)
++- 📄 **Pagination** for large todo lists (10 per page)
++- 🎨 **Smooth animations** and hover effects
++- 📱 **Mobile-responsive** design
++- 💾 **Persistent storage** with localStorage
++
++### 🎯 **Code Organization Features**
++
++- 📁 **Component-based architecture**
++- 🎨 **Separate CSS files** for each component
++- � **Page-based routing** structure
++- 🔧 **Reusable components**
++- 📱 **Responsive design patterns**
++
++---
++
++## 📁 **Project Structure** (Your New Organized Codebase!)
++
++```
++src/
++├── components/           # Reusable UI components
++│   ├── Header/          # App header with gradient
++│   ├── Navigation/      # Navigation bar with routing
++│   ├── TodoForm/        # Form to add new todos
++│   ├── TodoList/        # List of todos with pagination
++│   └── FilterTodos/     # Search/filter component
++├── pages/               # Different pages of your app
++│   ├── HomePage.jsx     # Landing page
++│   ├── TodosPage.jsx    # Main todos functionality
++│   └── AboutPage.jsx    # About page
++├── App.jsx              # Main app with routing setup
++└── main.jsx             # App entry point
++```
++
++---
++
++## 💻 **Setup & Installation**
++
++### **Prerequisites**
++
++- Node.js 20.19+ or 22.12+ (for Vite compatibility)
++- npm or yarn package manager
++
++### **Quick Start**
+ 
+ ```bash
+-# 1. Clone the project
++# 1. Clone the repository
+ git clone https://github.com/m-skalis/todo-app.git
+-
+ cd todo-app
+ 
+ # 2. Install dependencies
+ npm install
+ 
+-# 3. Start the development server
+-
++# 3. Start development server
+ npm run dev
+ 
+-# 4. Open in your browser at http://localhost:5173
++# 4. Open in browser
++# Visit: http://localhost:5173
+ ```
+ 
++### **Available Scripts**
++
++```bash
++npm run dev      # Start development server
++npm run build    # Build for production
++npm run preview  # Preview production build
++npm run lint     # Check code quality
++```
++
++---
++
++## 🎓 **Learning Resources & Next Steps**
++
++### � **Key Concepts You're Now Using**
++
++1. **React Hooks**
++
++   - `useState` - Managing component state
++   - `useEffect` - Side effects and lifecycle
++   - `useLocation` - Current route information
++
++2. **Modern CSS**
++
++   - CSS Grid & Flexbox for layouts
++   - CSS custom properties (variables)
++   - Responsive design with media queries
++   - CSS animations and transitions
++
++3. **Component Architecture**
++   - Reusable components
++   - Props passing
++   - Component composition
++   - Separation of concerns
++
++### 🎯 **What You Can Learn Next**
++
++1. **State Management**
++
++   - React Context API
++   - Redux Toolkit
++   - Zustand (lightweight state management)
++
++2. **API Integration**
++
++   - Fetch data from REST APIs
++   - Using axios for HTTP requests
++   - Error handling and loading states
++
++3. **Advanced React Patterns**
++
++   - Custom hooks
++   - Higher-order components
++   - Render props pattern
++
++4. **Testing**
++   - Jest for unit testing
++   - React Testing Library
++   - End-to-end testing with Cypress
++
++### 📖 **Recommended Learning Resources**
++
++- **React Official Docs**: [reactjs.org](https://reactjs.org)
++- **Ant Design Docs**: [ant.design](https://ant.design)
++- **React Router Docs**: [reactrouter.com](https://reactrouter.com)
++- **Modern CSS**: [CSS-Tricks](https://css-tricks.com)
++- **JavaScript ES6+**: [MDN Web Docs](https://developer.mozilla.org)
++
++---
++
++## 🎨 **Design Patterns Used**
++
++### **Color Scheme**
++
++- **Primary**: Purple gradient (`#667eea` to `#764ba2`)
++- **Accent**: Golden yellow (`#ffd700`)
++- **Success**: Green (`#52c41a`)
++- **Warning**: Orange (`#faad14`)
++- **Danger**: Red (`#ff4d4f`)
++
++### **Component Patterns**
++
++- **Card-based layouts** for visual separation
++- **Gradient backgrounds** for visual appeal
++- **Consistent spacing** using rem units
++- **Hover effects** for interactive feedback
++- **Responsive grid systems** for mobile support
++
++---
++
++## 🚀 **Deployment**
++
++### **Vercel (Recommended)**
++
++```bash
++npm install -g vercel
++vercel --prod
++```
++
++### **Netlify**
++
++```bash
++npm run build
++# Upload 'dist' folder to Netlify
++```
++
++### **GitHub Pages**
++
++```bash
++npm install --save-dev gh-pages
++npm run build
++npx gh-pages -d dist
++```
++
++---
++
++## 🤝 **Contributing & Next Features**
++
++### **Ideas for Enhancement**
++
++- 🏷️ **Categories/Tags** for todos
++- 📅 **Due dates** with calendar picker
++- 🔔 **Notifications** for overdue tasks
++- 🌙 **Dark mode** toggle
++- 💾 **Cloud sync** with Firebase
++- 📊 **Analytics dashboard**
++- 🎯 **Goal tracking**
++- 📱 **PWA features** (offline support)
++
++### **Code Quality**
++
++- Add TypeScript for type safety
++- Implement unit tests
++- Add ESLint and Prettier
++- Set up CI/CD pipeline
++
++---
++
++## 📸 **Screenshots**
++
++### **Home Page**
++
++![Home page with hero section and features](public/app-preview.png)
++
++### **Todos Page**
++
++Beautiful todo management with pagination and filtering
++
++### **Responsive Design**
++
++Works perfectly on desktop, tablet, and mobile devices
++
++---
++
++## 🏆 **What You've Accomplished**
++
++You've built a **production-ready** todo application with:
++
++- ✅ Modern React patterns and hooks
++- ✅ Professional UI/UX design
++- ✅ Multi-page application structure
++- ✅ Responsive design for all devices
++- ✅ Local storage persistence
++- ✅ Component-based architecture
++- ✅ Modern CSS techniques
++- ✅ Industry-standard tooling
++
++**This is seriously impressive work!** 🎉 You're well on your way to becoming a great React developer.
++
++---
++
++## 📞 **Questions & Support**
++
++- 📧 **Issues**: Open a GitHub issue
++- 💬 **Discussions**: Use GitHub discussions
++- 📚 **Documentation**: Check the code comments
++- 🎓 **Learning**: Explore the resources above
++
++---
+ 
++## 📄 **License**
+ 
+-### 📸 Preview
++MIT License - feel free to use this code for learning and building awesome things!
+ 
+-![A sample view of the application with a few tasks added and one crossed out](public/app-preview.png)
++---
+ 
+-### 🌐 Live Demo
+-[Todo app](https://todo-app-tan-theta-75.vercel.app/)
++**Keep coding, keep learning, and most importantly - have fun! 🚀✨**
+diff --git a/package-lock.json b/package-lock.json
+index 5c446a7..22b5557 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -8,8 +8,10 @@
+       "name": "todo-app",
+       "version": "0.0.0",
+       "dependencies": {
++        "antd": "^5.27.4",
+         "react": "^19.1.1",
+         "react-dom": "^19.1.1",
++        "react-router-dom": "^7.9.3",
+         "uuid": "^13.0.0"
+       },
+       "devDependencies": {
+@@ -24,6 +26,103 @@
+         "vite": "^7.1.7"
+       }
+     },
++    "node_modules/@ant-design/colors": {
++      "version": "7.2.1",
++      "resolved": "https://registry.npmjs.org/@ant-design/colors/-/colors-7.2.1.tgz",
++      "integrity": "sha512-lCHDcEzieu4GA3n8ELeZ5VQ8pKQAWcGGLRTQ50aQM2iqPpq2evTxER84jfdPvsPAtEcZ7m44NI45edFMo8oOYQ==",
++      "license": "MIT",
++      "dependencies": {
++        "@ant-design/fast-color": "^2.0.6"
++      }
++    },
++    "node_modules/@ant-design/cssinjs": {
++      "version": "1.24.0",
++      "resolved": "https://registry.npmjs.org/@ant-design/cssinjs/-/cssinjs-1.24.0.tgz",
++      "integrity": "sha512-K4cYrJBsgvL+IoozUXYjbT6LHHNt+19a9zkvpBPxLjFHas1UpPM2A5MlhROb0BT8N8WoavM5VsP9MeSeNK/3mg==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.11.1",
++        "@emotion/hash": "^0.8.0",
++        "@emotion/unitless": "^0.7.5",
++        "classnames": "^2.3.1",
++        "csstype": "^3.1.3",
++        "rc-util": "^5.35.0",
++        "stylis": "^4.3.4"
++      },
++      "peerDependencies": {
++        "react": ">=16.0.0",
++        "react-dom": ">=16.0.0"
++      }
++    },
++    "node_modules/@ant-design/cssinjs-utils": {
++      "version": "1.1.3",
++      "resolved": "https://registry.npmjs.org/@ant-design/cssinjs-utils/-/cssinjs-utils-1.1.3.tgz",
++      "integrity": "sha512-nOoQMLW1l+xR1Co8NFVYiP8pZp3VjIIzqV6D6ShYF2ljtdwWJn5WSsH+7kvCktXL/yhEtWURKOfH5Xz/gzlwsg==",
++      "license": "MIT",
++      "dependencies": {
++        "@ant-design/cssinjs": "^1.21.0",
++        "@babel/runtime": "^7.23.2",
++        "rc-util": "^5.38.0"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/@ant-design/fast-color": {
++      "version": "2.0.6",
++      "resolved": "https://registry.npmjs.org/@ant-design/fast-color/-/fast-color-2.0.6.tgz",
++      "integrity": "sha512-y2217gk4NqL35giHl72o6Zzqji9O7vHh9YmhUVkPtAOpoTCH4uWxo/pr4VE8t0+ChEPs0qo4eJRC5Q1eXWo3vA==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.24.7"
++      },
++      "engines": {
++        "node": ">=8.x"
++      }
++    },
++    "node_modules/@ant-design/icons": {
++      "version": "5.6.1",
++      "resolved": "https://registry.npmjs.org/@ant-design/icons/-/icons-5.6.1.tgz",
++      "integrity": "sha512-0/xS39c91WjPAZOWsvi1//zjx6kAp4kxWwctR6kuU6p133w8RU0D2dSCvZC19uQyharg/sAvYxGYWl01BbZZfg==",
++      "license": "MIT",
++      "dependencies": {
++        "@ant-design/colors": "^7.0.0",
++        "@ant-design/icons-svg": "^4.4.0",
++        "@babel/runtime": "^7.24.8",
++        "classnames": "^2.2.6",
++        "rc-util": "^5.31.1"
++      },
++      "engines": {
++        "node": ">=8"
++      },
++      "peerDependencies": {
++        "react": ">=16.0.0",
++        "react-dom": ">=16.0.0"
++      }
++    },
++    "node_modules/@ant-design/icons-svg": {
++      "version": "4.4.2",
++      "resolved": "https://registry.npmjs.org/@ant-design/icons-svg/-/icons-svg-4.4.2.tgz",
++      "integrity": "sha512-vHbT+zJEVzllwP+CM+ul7reTEfBR0vgxFe7+lREAsAA7YGsYpboiq2sQNeQeRvh09GfQgs/GyFEvZpJ9cLXpXA==",
++      "license": "MIT"
++    },
++    "node_modules/@ant-design/react-slick": {
++      "version": "1.1.2",
++      "resolved": "https://registry.npmjs.org/@ant-design/react-slick/-/react-slick-1.1.2.tgz",
++      "integrity": "sha512-EzlvzE6xQUBrZuuhSAFTdsr4P2bBBHGZwKFemEfq8gIGyIQCxalYfZW/T2ORbtQx5rU69o+WycP3exY/7T1hGA==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.10.4",
++        "classnames": "^2.2.5",
++        "json2mq": "^0.2.0",
++        "resize-observer-polyfill": "^1.5.1",
++        "throttle-debounce": "^5.0.0"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0"
++      }
++    },
+     "node_modules/@babel/code-frame": {
+       "version": "7.27.1",
+       "resolved": "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.27.1.tgz",
+@@ -258,6 +357,15 @@
+         "@babel/core": "^7.0.0-0"
+       }
+     },
++    "node_modules/@babel/runtime": {
++      "version": "7.28.4",
++      "resolved": "https://registry.npmjs.org/@babel/runtime/-/runtime-7.28.4.tgz",
++      "integrity": "sha512-Q/N6JNWvIvPnLDvjlE1OUBLPQHH6l3CltCEsHIujp45zQUSSh8K+gHnaEX45yAT1nyngnINhvWtzN+Nb9D8RAQ==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=6.9.0"
++      }
++    },
+     "node_modules/@babel/template": {
+       "version": "7.27.2",
+       "resolved": "https://registry.npmjs.org/@babel/template/-/template-7.27.2.tgz",
+@@ -306,6 +414,18 @@
+         "node": ">=6.9.0"
+       }
+     },
++    "node_modules/@emotion/hash": {
++      "version": "0.8.0",
++      "resolved": "https://registry.npmjs.org/@emotion/hash/-/hash-0.8.0.tgz",
++      "integrity": "sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow==",
++      "license": "MIT"
++    },
++    "node_modules/@emotion/unitless": {
++      "version": "0.7.5",
++      "resolved": "https://registry.npmjs.org/@emotion/unitless/-/unitless-0.7.5.tgz",
++      "integrity": "sha512-OWORNpfjMsSSUBVrRBVGECkhWcULOAJz9ZW8uK9qgxD+87M7jHRcvh/A96XXNhXTLmKcoYSQtBEX7lHMO7YRwg==",
++      "license": "MIT"
++    },
+     "node_modules/@esbuild/aix-ppc64": {
+       "version": "0.25.10",
+       "resolved": "https://registry.npmjs.org/@esbuild/aix-ppc64/-/aix-ppc64-0.25.10.tgz",
+@@ -1007,6 +1127,154 @@
+         "@jridgewell/sourcemap-codec": "^1.4.14"
+       }
+     },
++    "node_modules/@rc-component/async-validator": {
++      "version": "5.0.4",
++      "resolved": "https://registry.npmjs.org/@rc-component/async-validator/-/async-validator-5.0.4.tgz",
++      "integrity": "sha512-qgGdcVIF604M9EqjNF0hbUTz42bz/RDtxWdWuU5EQe3hi7M8ob54B6B35rOsvX5eSvIHIzT9iH1R3n+hk3CGfg==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.24.4"
++      },
++      "engines": {
++        "node": ">=14.x"
++      }
++    },
++    "node_modules/@rc-component/color-picker": {
++      "version": "2.0.1",
++      "resolved": "https://registry.npmjs.org/@rc-component/color-picker/-/color-picker-2.0.1.tgz",
++      "integrity": "sha512-WcZYwAThV/b2GISQ8F+7650r5ZZJ043E57aVBFkQ+kSY4C6wdofXgB0hBx+GPGpIU0Z81eETNoDUJMr7oy/P8Q==",
++      "license": "MIT",
++      "dependencies": {
++        "@ant-design/fast-color": "^2.0.6",
++        "@babel/runtime": "^7.23.6",
++        "classnames": "^2.2.6",
++        "rc-util": "^5.38.1"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/@rc-component/context": {
++      "version": "1.4.0",
++      "resolved": "https://registry.npmjs.org/@rc-component/context/-/context-1.4.0.tgz",
++      "integrity": "sha512-kFcNxg9oLRMoL3qki0OMxK+7g5mypjgaaJp/pkOis/6rVxma9nJBF/8kCIuTYHUQNr0ii7MxqE33wirPZLJQ2w==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.10.1",
++        "rc-util": "^5.27.0"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/@rc-component/mini-decimal": {
++      "version": "1.1.0",
++      "resolved": "https://registry.npmjs.org/@rc-component/mini-decimal/-/mini-decimal-1.1.0.tgz",
++      "integrity": "sha512-jS4E7T9Li2GuYwI6PyiVXmxTiM6b07rlD9Ge8uGZSCz3WlzcG5ZK7g5bbuKNeZ9pgUuPK/5guV781ujdVpm4HQ==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.18.0"
++      },
++      "engines": {
++        "node": ">=8.x"
++      }
++    },
++    "node_modules/@rc-component/mutate-observer": {
++      "version": "1.1.0",
++      "resolved": "https://registry.npmjs.org/@rc-component/mutate-observer/-/mutate-observer-1.1.0.tgz",
++      "integrity": "sha512-QjrOsDXQusNwGZPf4/qRQasg7UFEj06XiCJ8iuiq/Io7CrHrgVi6Uuetw60WAMG1799v+aM8kyc+1L/GBbHSlw==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.18.0",
++        "classnames": "^2.3.2",
++        "rc-util": "^5.24.4"
++      },
++      "engines": {
++        "node": ">=8.x"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/@rc-component/portal": {
++      "version": "1.1.2",
++      "resolved": "https://registry.npmjs.org/@rc-component/portal/-/portal-1.1.2.tgz",
++      "integrity": "sha512-6f813C0IsasTZms08kfA8kPAGxbbkYToa8ALaiDIGGECU4i9hj8Plgbx0sNJDrey3EtHO30hmdaxtT0138xZcg==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.18.0",
++        "classnames": "^2.3.2",
++        "rc-util": "^5.24.4"
++      },
++      "engines": {
++        "node": ">=8.x"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/@rc-component/qrcode": {
++      "version": "1.0.1",
++      "resolved": "https://registry.npmjs.org/@rc-component/qrcode/-/qrcode-1.0.1.tgz",
++      "integrity": "sha512-g8eeeaMyFXVlq8cZUeaxCDhfIYjpao0l9cvm5gFwKXy/Vm1yDWV7h2sjH5jHYzdFedlVKBpATFB1VKMrHzwaWQ==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.24.7",
++        "classnames": "^2.3.2"
++      },
++      "engines": {
++        "node": ">=8.x"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/@rc-component/tour": {
++      "version": "1.15.1",
++      "resolved": "https://registry.npmjs.org/@rc-component/tour/-/tour-1.15.1.tgz",
++      "integrity": "sha512-Tr2t7J1DKZUpfJuDZWHxyxWpfmj8EZrqSgyMZ+BCdvKZ6r1UDsfU46M/iWAAFBy961Ssfom2kv5f3UcjIL2CmQ==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.18.0",
++        "@rc-component/portal": "^1.0.0-9",
++        "@rc-component/trigger": "^2.0.0",
++        "classnames": "^2.3.2",
++        "rc-util": "^5.24.4"
++      },
++      "engines": {
++        "node": ">=8.x"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/@rc-component/trigger": {
++      "version": "2.3.0",
++      "resolved": "https://registry.npmjs.org/@rc-component/trigger/-/trigger-2.3.0.tgz",
++      "integrity": "sha512-iwaxZyzOuK0D7lS+0AQEtW52zUWxoGqTGkke3dRyb8pYiShmRpCjB/8TzPI4R6YySCH7Vm9BZj/31VPiiQTLBg==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.23.2",
++        "@rc-component/portal": "^1.1.0",
++        "classnames": "^2.3.2",
++        "rc-motion": "^2.0.0",
++        "rc-resize-observer": "^1.3.1",
++        "rc-util": "^5.44.0"
++      },
++      "engines": {
++        "node": ">=8.x"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
+     "node_modules/@rolldown/pluginutils": {
+       "version": "1.0.0-beta.38",
+       "resolved": "https://registry.npmjs.org/@rolldown/pluginutils/-/pluginutils-1.0.0-beta.38.tgz",
+@@ -1478,6 +1746,71 @@
+         "url": "https://github.com/chalk/ansi-styles?sponsor=1"
+       }
+     },
++    "node_modules/antd": {
++      "version": "5.27.4",
++      "resolved": "https://registry.npmjs.org/antd/-/antd-5.27.4.tgz",
++      "integrity": "sha512-rhArohoAUCxhkPjGI/BXthOrrjaElL4Fb7d4vEHnIR3DpxFXfegd4rN21IgGdiF+Iz4EFuUZu8MdS8NuJHLSVQ==",
++      "license": "MIT",
++      "dependencies": {
++        "@ant-design/colors": "^7.2.1",
++        "@ant-design/cssinjs": "^1.23.0",
++        "@ant-design/cssinjs-utils": "^1.1.3",
++        "@ant-design/fast-color": "^2.0.6",
++        "@ant-design/icons": "^5.6.1",
++        "@ant-design/react-slick": "~1.1.2",
++        "@babel/runtime": "^7.26.0",
++        "@rc-component/color-picker": "~2.0.1",
++        "@rc-component/mutate-observer": "^1.1.0",
++        "@rc-component/qrcode": "~1.0.0",
++        "@rc-component/tour": "~1.15.1",
++        "@rc-component/trigger": "^2.3.0",
++        "classnames": "^2.5.1",
++        "copy-to-clipboard": "^3.3.3",
++        "dayjs": "^1.11.11",
++        "rc-cascader": "~3.34.0",
++        "rc-checkbox": "~3.5.0",
++        "rc-collapse": "~3.9.0",
++        "rc-dialog": "~9.6.0",
++        "rc-drawer": "~7.3.0",
++        "rc-dropdown": "~4.2.1",
++        "rc-field-form": "~2.7.0",
++        "rc-image": "~7.12.0",
++        "rc-input": "~1.8.0",
++        "rc-input-number": "~9.5.0",
++        "rc-mentions": "~2.20.0",
++        "rc-menu": "~9.16.1",
++        "rc-motion": "^2.9.5",
++        "rc-notification": "~5.6.4",
++        "rc-pagination": "~5.1.0",
++        "rc-picker": "~4.11.3",
++        "rc-progress": "~4.0.0",
++        "rc-rate": "~2.13.1",
++        "rc-resize-observer": "^1.4.3",
++        "rc-segmented": "~2.7.0",
++        "rc-select": "~14.16.8",
++        "rc-slider": "~11.1.9",
++        "rc-steps": "~6.0.1",
++        "rc-switch": "~4.1.0",
++        "rc-table": "~7.53.0",
++        "rc-tabs": "~15.7.0",
++        "rc-textarea": "~1.10.2",
++        "rc-tooltip": "~6.4.0",
++        "rc-tree": "~5.13.1",
++        "rc-tree-select": "~5.27.0",
++        "rc-upload": "~4.9.2",
++        "rc-util": "^5.44.4",
++        "scroll-into-view-if-needed": "^3.1.0",
++        "throttle-debounce": "^5.0.2"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/ant-design"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
+     "node_modules/argparse": {
+       "version": "2.0.1",
+       "resolved": "https://registry.npmjs.org/argparse/-/argparse-2.0.1.tgz",
+@@ -1595,6 +1928,12 @@
+         "url": "https://github.com/chalk/chalk?sponsor=1"
+       }
+     },
++    "node_modules/classnames": {
++      "version": "2.5.1",
++      "resolved": "https://registry.npmjs.org/classnames/-/classnames-2.5.1.tgz",
++      "integrity": "sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==",
++      "license": "MIT"
++    },
+     "node_modules/color-convert": {
+       "version": "2.0.1",
+       "resolved": "https://registry.npmjs.org/color-convert/-/color-convert-2.0.1.tgz",
+@@ -1615,6 +1954,12 @@
+       "dev": true,
+       "license": "MIT"
+     },
++    "node_modules/compute-scroll-into-view": {
++      "version": "3.1.1",
++      "resolved": "https://registry.npmjs.org/compute-scroll-into-view/-/compute-scroll-into-view-3.1.1.tgz",
++      "integrity": "sha512-VRhuHOLoKYOy4UbilLbUzbYg93XLjv2PncJC50EuTWPA3gaja1UjBsUP/D/9/juV3vQFr6XBEzn9KCAHdUvOHw==",
++      "license": "MIT"
++    },
+     "node_modules/concat-map": {
+       "version": "0.0.1",
+       "resolved": "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz",
+@@ -1629,6 +1974,23 @@
+       "dev": true,
+       "license": "MIT"
+     },
++    "node_modules/cookie": {
++      "version": "1.0.2",
++      "resolved": "https://registry.npmjs.org/cookie/-/cookie-1.0.2.tgz",
++      "integrity": "sha512-9Kr/j4O16ISv8zBBhJoi4bXOYNTkFLOqSL3UDB0njXxCXNezjeyVrJyGOWtgfs/q2km1gwBcfH8q1yEGoMYunA==",
++      "engines": {
++        "node": ">=18"
++      }
++    },
++    "node_modules/copy-to-clipboard": {
++      "version": "3.3.3",
++      "resolved": "https://registry.npmjs.org/copy-to-clipboard/-/copy-to-clipboard-3.3.3.tgz",
++      "integrity": "sha512-2KV8NhB5JqC3ky0r9PMCAZKbUHSwtEo4CwCs0KXgruG43gX5PMqDEBbVU4OUzw2MuAWUfsuFmWvEKG5QRfSnJA==",
++      "license": "MIT",
++      "dependencies": {
++        "toggle-selection": "^1.0.6"
++      }
++    },
+     "node_modules/cross-spawn": {
+       "version": "7.0.6",
+       "resolved": "https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.6.tgz",
+@@ -1648,7 +2010,12 @@
+       "version": "3.1.3",
+       "resolved": "https://registry.npmjs.org/csstype/-/csstype-3.1.3.tgz",
+       "integrity": "sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==",
+-      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/dayjs": {
++      "version": "1.11.18",
++      "resolved": "https://registry.npmjs.org/dayjs/-/dayjs-1.11.18.tgz",
++      "integrity": "sha512-zFBQ7WFRvVRhKcWoUh+ZA1g2HVgUbsZm9sbddh8EC5iv93sui8DVVz1Npvz+r6meo9VKfa8NyLWBsQK1VvIKPA==",
+       "license": "MIT"
+     },
+     "node_modules/debug": {
+@@ -2198,6 +2565,15 @@
+       "dev": true,
+       "license": "MIT"
+     },
++    "node_modules/json2mq": {
++      "version": "0.2.0",
++      "resolved": "https://registry.npmjs.org/json2mq/-/json2mq-0.2.0.tgz",
++      "integrity": "sha512-SzoRg7ux5DWTII9J2qkrZrqV1gt+rTaoufMxEzXbS26Uid0NwaJd123HcoB80TgubEppxxIGdNxCx50fEoEWQA==",
++      "license": "MIT",
++      "dependencies": {
++        "string-convert": "^0.2.0"
++      }
++    },
+     "node_modules/json5": {
+       "version": "2.2.3",
+       "resolved": "https://registry.npmjs.org/json5/-/json5-2.2.3.tgz",
+@@ -2473,6 +2849,612 @@
+         "node": ">=6"
+       }
+     },
++    "node_modules/rc-cascader": {
++      "version": "3.34.0",
++      "resolved": "https://registry.npmjs.org/rc-cascader/-/rc-cascader-3.34.0.tgz",
++      "integrity": "sha512-KpXypcvju9ptjW9FaN2NFcA2QH9E9LHKq169Y0eWtH4e/wHQ5Wh5qZakAgvb8EKZ736WZ3B0zLLOBsrsja5Dag==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.25.7",
++        "classnames": "^2.3.1",
++        "rc-select": "~14.16.2",
++        "rc-tree": "~5.13.0",
++        "rc-util": "^5.43.0"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-checkbox": {
++      "version": "3.5.0",
++      "resolved": "https://registry.npmjs.org/rc-checkbox/-/rc-checkbox-3.5.0.tgz",
++      "integrity": "sha512-aOAQc3E98HteIIsSqm6Xk2FPKIER6+5vyEFMZfo73TqM+VVAIqOkHoPjgKLqSNtVLWScoaM7vY2ZrGEheI79yg==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.10.1",
++        "classnames": "^2.3.2",
++        "rc-util": "^5.25.2"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-collapse": {
++      "version": "3.9.0",
++      "resolved": "https://registry.npmjs.org/rc-collapse/-/rc-collapse-3.9.0.tgz",
++      "integrity": "sha512-swDdz4QZ4dFTo4RAUMLL50qP0EY62N2kvmk2We5xYdRwcRn8WcYtuetCJpwpaCbUfUt5+huLpVxhvmnK+PHrkA==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.10.1",
++        "classnames": "2.x",
++        "rc-motion": "^2.3.4",
++        "rc-util": "^5.27.0"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-dialog": {
++      "version": "9.6.0",
++      "resolved": "https://registry.npmjs.org/rc-dialog/-/rc-dialog-9.6.0.tgz",
++      "integrity": "sha512-ApoVi9Z8PaCQg6FsUzS8yvBEQy0ZL2PkuvAgrmohPkN3okps5WZ5WQWPc1RNuiOKaAYv8B97ACdsFU5LizzCqg==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.10.1",
++        "@rc-component/portal": "^1.0.0-8",
++        "classnames": "^2.2.6",
++        "rc-motion": "^2.3.0",
++        "rc-util": "^5.21.0"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-drawer": {
++      "version": "7.3.0",
++      "resolved": "https://registry.npmjs.org/rc-drawer/-/rc-drawer-7.3.0.tgz",
++      "integrity": "sha512-DX6CIgiBWNpJIMGFO8BAISFkxiuKitoizooj4BDyee8/SnBn0zwO2FHrNDpqqepj0E/TFTDpmEBCyFuTgC7MOg==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.23.9",
++        "@rc-component/portal": "^1.1.1",
++        "classnames": "^2.2.6",
++        "rc-motion": "^2.6.1",
++        "rc-util": "^5.38.1"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-dropdown": {
++      "version": "4.2.1",
++      "resolved": "https://registry.npmjs.org/rc-dropdown/-/rc-dropdown-4.2.1.tgz",
++      "integrity": "sha512-YDAlXsPv3I1n42dv1JpdM7wJ+gSUBfeyPK59ZpBD9jQhK9jVuxpjj3NmWQHOBceA1zEPVX84T2wbdb2SD0UjmA==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.18.3",
++        "@rc-component/trigger": "^2.0.0",
++        "classnames": "^2.2.6",
++        "rc-util": "^5.44.1"
++      },
++      "peerDependencies": {
++        "react": ">=16.11.0",
++        "react-dom": ">=16.11.0"
++      }
++    },
++    "node_modules/rc-field-form": {
++      "version": "2.7.0",
++      "resolved": "https://registry.npmjs.org/rc-field-form/-/rc-field-form-2.7.0.tgz",
++      "integrity": "sha512-hgKsCay2taxzVnBPZl+1n4ZondsV78G++XVsMIJCAoioMjlMQR9YwAp7JZDIECzIu2Z66R+f4SFIRrO2DjDNAA==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.18.0",
++        "@rc-component/async-validator": "^5.0.3",
++        "rc-util": "^5.32.2"
++      },
++      "engines": {
++        "node": ">=8.x"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-image": {
++      "version": "7.12.0",
++      "resolved": "https://registry.npmjs.org/rc-image/-/rc-image-7.12.0.tgz",
++      "integrity": "sha512-cZ3HTyyckPnNnUb9/DRqduqzLfrQRyi+CdHjdqgsyDpI3Ln5UX1kXnAhPBSJj9pVRzwRFgqkN7p9b6HBDjmu/Q==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.11.2",
++        "@rc-component/portal": "^1.0.2",
++        "classnames": "^2.2.6",
++        "rc-dialog": "~9.6.0",
++        "rc-motion": "^2.6.2",
++        "rc-util": "^5.34.1"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-input": {
++      "version": "1.8.0",
++      "resolved": "https://registry.npmjs.org/rc-input/-/rc-input-1.8.0.tgz",
++      "integrity": "sha512-KXvaTbX+7ha8a/k+eg6SYRVERK0NddX8QX7a7AnRvUa/rEH0CNMlpcBzBkhI0wp2C8C4HlMoYl8TImSN+fuHKA==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.11.1",
++        "classnames": "^2.2.1",
++        "rc-util": "^5.18.1"
++      },
++      "peerDependencies": {
++        "react": ">=16.0.0",
++        "react-dom": ">=16.0.0"
++      }
++    },
++    "node_modules/rc-input-number": {
++      "version": "9.5.0",
++      "resolved": "https://registry.npmjs.org/rc-input-number/-/rc-input-number-9.5.0.tgz",
++      "integrity": "sha512-bKaEvB5tHebUURAEXw35LDcnRZLq3x1k7GxfAqBMzmpHkDGzjAtnUL8y4y5N15rIFIg5IJgwr211jInl3cipag==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.10.1",
++        "@rc-component/mini-decimal": "^1.0.1",
++        "classnames": "^2.2.5",
++        "rc-input": "~1.8.0",
++        "rc-util": "^5.40.1"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-mentions": {
++      "version": "2.20.0",
++      "resolved": "https://registry.npmjs.org/rc-mentions/-/rc-mentions-2.20.0.tgz",
++      "integrity": "sha512-w8HCMZEh3f0nR8ZEd466ATqmXFCMGMN5UFCzEUL0bM/nGw/wOS2GgRzKBcm19K++jDyuWCOJOdgcKGXU3fXfbQ==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.22.5",
++        "@rc-component/trigger": "^2.0.0",
++        "classnames": "^2.2.6",
++        "rc-input": "~1.8.0",
++        "rc-menu": "~9.16.0",
++        "rc-textarea": "~1.10.0",
++        "rc-util": "^5.34.1"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-menu": {
++      "version": "9.16.1",
++      "resolved": "https://registry.npmjs.org/rc-menu/-/rc-menu-9.16.1.tgz",
++      "integrity": "sha512-ghHx6/6Dvp+fw8CJhDUHFHDJ84hJE3BXNCzSgLdmNiFErWSOaZNsihDAsKq9ByTALo/xkNIwtDFGIl6r+RPXBg==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.10.1",
++        "@rc-component/trigger": "^2.0.0",
++        "classnames": "2.x",
++        "rc-motion": "^2.4.3",
++        "rc-overflow": "^1.3.1",
++        "rc-util": "^5.27.0"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-motion": {
++      "version": "2.9.5",
++      "resolved": "https://registry.npmjs.org/rc-motion/-/rc-motion-2.9.5.tgz",
++      "integrity": "sha512-w+XTUrfh7ArbYEd2582uDrEhmBHwK1ZENJiSJVb7uRxdE7qJSYjbO2eksRXmndqyKqKoYPc9ClpPh5242mV1vA==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.11.1",
++        "classnames": "^2.2.1",
++        "rc-util": "^5.44.0"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-notification": {
++      "version": "5.6.4",
++      "resolved": "https://registry.npmjs.org/rc-notification/-/rc-notification-5.6.4.tgz",
++      "integrity": "sha512-KcS4O6B4qzM3KH7lkwOB7ooLPZ4b6J+VMmQgT51VZCeEcmghdeR4IrMcFq0LG+RPdnbe/ArT086tGM8Snimgiw==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.10.1",
++        "classnames": "2.x",
++        "rc-motion": "^2.9.0",
++        "rc-util": "^5.20.1"
++      },
++      "engines": {
++        "node": ">=8.x"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-overflow": {
++      "version": "1.4.1",
++      "resolved": "https://registry.npmjs.org/rc-overflow/-/rc-overflow-1.4.1.tgz",
++      "integrity": "sha512-3MoPQQPV1uKyOMVNd6SZfONi+f3st0r8PksexIdBTeIYbMX0Jr+k7pHEDvsXtR4BpCv90/Pv2MovVNhktKrwvw==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.11.1",
++        "classnames": "^2.2.1",
++        "rc-resize-observer": "^1.0.0",
++        "rc-util": "^5.37.0"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-pagination": {
++      "version": "5.1.0",
++      "resolved": "https://registry.npmjs.org/rc-pagination/-/rc-pagination-5.1.0.tgz",
++      "integrity": "sha512-8416Yip/+eclTFdHXLKTxZvn70duYVGTvUUWbckCCZoIl3jagqke3GLsFrMs0bsQBikiYpZLD9206Ej4SOdOXQ==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.10.1",
++        "classnames": "^2.3.2",
++        "rc-util": "^5.38.0"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-picker": {
++      "version": "4.11.3",
++      "resolved": "https://registry.npmjs.org/rc-picker/-/rc-picker-4.11.3.tgz",
++      "integrity": "sha512-MJ5teb7FlNE0NFHTncxXQ62Y5lytq6sh5nUw0iH8OkHL/TjARSEvSHpr940pWgjGANpjCwyMdvsEV55l5tYNSg==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.24.7",
++        "@rc-component/trigger": "^2.0.0",
++        "classnames": "^2.2.1",
++        "rc-overflow": "^1.3.2",
++        "rc-resize-observer": "^1.4.0",
++        "rc-util": "^5.43.0"
++      },
++      "engines": {
++        "node": ">=8.x"
++      },
++      "peerDependencies": {
++        "date-fns": ">= 2.x",
++        "dayjs": ">= 1.x",
++        "luxon": ">= 3.x",
++        "moment": ">= 2.x",
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      },
++      "peerDependenciesMeta": {
++        "date-fns": {
++          "optional": true
++        },
++        "dayjs": {
++          "optional": true
++        },
++        "luxon": {
++          "optional": true
++        },
++        "moment": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/rc-progress": {
++      "version": "4.0.0",
++      "resolved": "https://registry.npmjs.org/rc-progress/-/rc-progress-4.0.0.tgz",
++      "integrity": "sha512-oofVMMafOCokIUIBnZLNcOZFsABaUw8PPrf1/y0ZBvKZNpOiu5h4AO9vv11Sw0p4Hb3D0yGWuEattcQGtNJ/aw==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.10.1",
++        "classnames": "^2.2.6",
++        "rc-util": "^5.16.1"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-rate": {
++      "version": "2.13.1",
++      "resolved": "https://registry.npmjs.org/rc-rate/-/rc-rate-2.13.1.tgz",
++      "integrity": "sha512-QUhQ9ivQ8Gy7mtMZPAjLbxBt5y9GRp65VcUyGUMF3N3fhiftivPHdpuDIaWIMOTEprAjZPC08bls1dQB+I1F2Q==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.10.1",
++        "classnames": "^2.2.5",
++        "rc-util": "^5.0.1"
++      },
++      "engines": {
++        "node": ">=8.x"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-resize-observer": {
++      "version": "1.4.3",
++      "resolved": "https://registry.npmjs.org/rc-resize-observer/-/rc-resize-observer-1.4.3.tgz",
++      "integrity": "sha512-YZLjUbyIWox8E9i9C3Tm7ia+W7euPItNWSPX5sCcQTYbnwDb5uNpnLHQCG1f22oZWUhLw4Mv2tFmeWe68CDQRQ==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.20.7",
++        "classnames": "^2.2.1",
++        "rc-util": "^5.44.1",
++        "resize-observer-polyfill": "^1.5.1"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-segmented": {
++      "version": "2.7.0",
++      "resolved": "https://registry.npmjs.org/rc-segmented/-/rc-segmented-2.7.0.tgz",
++      "integrity": "sha512-liijAjXz+KnTRVnxxXG2sYDGd6iLL7VpGGdR8gwoxAXy2KglviKCxLWZdjKYJzYzGSUwKDSTdYk8brj54Bn5BA==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.11.1",
++        "classnames": "^2.2.1",
++        "rc-motion": "^2.4.4",
++        "rc-util": "^5.17.0"
++      },
++      "peerDependencies": {
++        "react": ">=16.0.0",
++        "react-dom": ">=16.0.0"
++      }
++    },
++    "node_modules/rc-select": {
++      "version": "14.16.8",
++      "resolved": "https://registry.npmjs.org/rc-select/-/rc-select-14.16.8.tgz",
++      "integrity": "sha512-NOV5BZa1wZrsdkKaiK7LHRuo5ZjZYMDxPP6/1+09+FB4KoNi8jcG1ZqLE3AVCxEsYMBe65OBx71wFoHRTP3LRg==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.10.1",
++        "@rc-component/trigger": "^2.1.1",
++        "classnames": "2.x",
++        "rc-motion": "^2.0.1",
++        "rc-overflow": "^1.3.1",
++        "rc-util": "^5.16.1",
++        "rc-virtual-list": "^3.5.2"
++      },
++      "engines": {
++        "node": ">=8.x"
++      },
++      "peerDependencies": {
++        "react": "*",
++        "react-dom": "*"
++      }
++    },
++    "node_modules/rc-slider": {
++      "version": "11.1.9",
++      "resolved": "https://registry.npmjs.org/rc-slider/-/rc-slider-11.1.9.tgz",
++      "integrity": "sha512-h8IknhzSh3FEM9u8ivkskh+Ef4Yo4JRIY2nj7MrH6GQmrwV6mcpJf5/4KgH5JaVI1H3E52yCdpOlVyGZIeph5A==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.10.1",
++        "classnames": "^2.2.5",
++        "rc-util": "^5.36.0"
++      },
++      "engines": {
++        "node": ">=8.x"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-steps": {
++      "version": "6.0.1",
++      "resolved": "https://registry.npmjs.org/rc-steps/-/rc-steps-6.0.1.tgz",
++      "integrity": "sha512-lKHL+Sny0SeHkQKKDJlAjV5oZ8DwCdS2hFhAkIjuQt1/pB81M0cA0ErVFdHq9+jmPmFw1vJB2F5NBzFXLJxV+g==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.16.7",
++        "classnames": "^2.2.3",
++        "rc-util": "^5.16.1"
++      },
++      "engines": {
++        "node": ">=8.x"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-switch": {
++      "version": "4.1.0",
++      "resolved": "https://registry.npmjs.org/rc-switch/-/rc-switch-4.1.0.tgz",
++      "integrity": "sha512-TI8ufP2Az9oEbvyCeVE4+90PDSljGyuwix3fV58p7HV2o4wBnVToEyomJRVyTaZeqNPAp+vqeo4Wnj5u0ZZQBg==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.21.0",
++        "classnames": "^2.2.1",
++        "rc-util": "^5.30.0"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-table": {
++      "version": "7.53.1",
++      "resolved": "https://registry.npmjs.org/rc-table/-/rc-table-7.53.1.tgz",
++      "integrity": "sha512-firAd7Z+liqIDS5TubJ1qqcoBd6YcANLKWQDZhFf3rfoOTt/UNPj4n3O+2vhl+z4QMqwPEUVAil661WHA8H8Aw==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.10.1",
++        "@rc-component/context": "^1.4.0",
++        "classnames": "^2.2.5",
++        "rc-resize-observer": "^1.1.0",
++        "rc-util": "^5.44.3",
++        "rc-virtual-list": "^3.14.2"
++      },
++      "engines": {
++        "node": ">=8.x"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-tabs": {
++      "version": "15.7.0",
++      "resolved": "https://registry.npmjs.org/rc-tabs/-/rc-tabs-15.7.0.tgz",
++      "integrity": "sha512-ZepiE+6fmozYdWf/9gVp7k56PKHB1YYoDsKeQA1CBlJ/POIhjkcYiv0AGP0w2Jhzftd3AVvZP/K+V+Lpi2ankA==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.11.2",
++        "classnames": "2.x",
++        "rc-dropdown": "~4.2.0",
++        "rc-menu": "~9.16.0",
++        "rc-motion": "^2.6.2",
++        "rc-resize-observer": "^1.0.0",
++        "rc-util": "^5.34.1"
++      },
++      "engines": {
++        "node": ">=8.x"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-textarea": {
++      "version": "1.10.2",
++      "resolved": "https://registry.npmjs.org/rc-textarea/-/rc-textarea-1.10.2.tgz",
++      "integrity": "sha512-HfaeXiaSlpiSp0I/pvWpecFEHpVysZ9tpDLNkxQbMvMz6gsr7aVZ7FpWP9kt4t7DB+jJXesYS0us1uPZnlRnwQ==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.10.1",
++        "classnames": "^2.2.1",
++        "rc-input": "~1.8.0",
++        "rc-resize-observer": "^1.0.0",
++        "rc-util": "^5.27.0"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-tooltip": {
++      "version": "6.4.0",
++      "resolved": "https://registry.npmjs.org/rc-tooltip/-/rc-tooltip-6.4.0.tgz",
++      "integrity": "sha512-kqyivim5cp8I5RkHmpsp1Nn/Wk+1oeloMv9c7LXNgDxUpGm+RbXJGL+OPvDlcRnx9DBeOe4wyOIl4OKUERyH1g==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.11.2",
++        "@rc-component/trigger": "^2.0.0",
++        "classnames": "^2.3.1",
++        "rc-util": "^5.44.3"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-tree": {
++      "version": "5.13.1",
++      "resolved": "https://registry.npmjs.org/rc-tree/-/rc-tree-5.13.1.tgz",
++      "integrity": "sha512-FNhIefhftobCdUJshO7M8uZTA9F4OPGVXqGfZkkD/5soDeOhwO06T/aKTrg0WD8gRg/pyfq+ql3aMymLHCTC4A==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.10.1",
++        "classnames": "2.x",
++        "rc-motion": "^2.0.1",
++        "rc-util": "^5.16.1",
++        "rc-virtual-list": "^3.5.1"
++      },
++      "engines": {
++        "node": ">=10.x"
++      },
++      "peerDependencies": {
++        "react": "*",
++        "react-dom": "*"
++      }
++    },
++    "node_modules/rc-tree-select": {
++      "version": "5.27.0",
++      "resolved": "https://registry.npmjs.org/rc-tree-select/-/rc-tree-select-5.27.0.tgz",
++      "integrity": "sha512-2qTBTzwIT7LRI1o7zLyrCzmo5tQanmyGbSaGTIf7sYimCklAToVVfpMC6OAldSKolcnjorBYPNSKQqJmN3TCww==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.25.7",
++        "classnames": "2.x",
++        "rc-select": "~14.16.2",
++        "rc-tree": "~5.13.0",
++        "rc-util": "^5.43.0"
++      },
++      "peerDependencies": {
++        "react": "*",
++        "react-dom": "*"
++      }
++    },
++    "node_modules/rc-upload": {
++      "version": "4.9.2",
++      "resolved": "https://registry.npmjs.org/rc-upload/-/rc-upload-4.9.2.tgz",
++      "integrity": "sha512-nHx+9rbd1FKMiMRYsqQ3NkXUv7COHPBo3X1Obwq9SWS6/diF/A0aJ5OHubvwUAIDs+4RMleljV0pcrNUc823GQ==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.18.3",
++        "classnames": "^2.2.5",
++        "rc-util": "^5.2.0"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-util": {
++      "version": "5.44.4",
++      "resolved": "https://registry.npmjs.org/rc-util/-/rc-util-5.44.4.tgz",
++      "integrity": "sha512-resueRJzmHG9Q6rI/DfK6Kdv9/Lfls05vzMs1Sk3M2P+3cJa+MakaZyWY8IPfehVuhPJFKrIY1IK4GqbiaiY5w==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.18.3",
++        "react-is": "^18.2.0"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
++    "node_modules/rc-virtual-list": {
++      "version": "3.19.2",
++      "resolved": "https://registry.npmjs.org/rc-virtual-list/-/rc-virtual-list-3.19.2.tgz",
++      "integrity": "sha512-Ys6NcjwGkuwkeaWBDqfI3xWuZ7rDiQXlH1o2zLfFzATfEgXcqpk8CkgMfbJD81McqjcJVez25a3kPxCR807evA==",
++      "license": "MIT",
++      "dependencies": {
++        "@babel/runtime": "^7.20.0",
++        "classnames": "^2.2.6",
++        "rc-resize-observer": "^1.0.0",
++        "rc-util": "^5.36.0"
++      },
++      "engines": {
++        "node": ">=8.x"
++      },
++      "peerDependencies": {
++        "react": ">=16.9.0",
++        "react-dom": ">=16.9.0"
++      }
++    },
+     "node_modules/react": {
+       "version": "19.2.0",
+       "resolved": "https://registry.npmjs.org/react/-/react-19.2.0.tgz",
+@@ -2494,6 +3476,12 @@
+         "react": "^19.2.0"
+       }
+     },
++    "node_modules/react-is": {
++      "version": "18.3.1",
++      "resolved": "https://registry.npmjs.org/react-is/-/react-is-18.3.1.tgz",
++      "integrity": "sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==",
++      "license": "MIT"
++    },
+     "node_modules/react-refresh": {
+       "version": "0.17.0",
+       "resolved": "https://registry.npmjs.org/react-refresh/-/react-refresh-0.17.0.tgz",
+@@ -2504,6 +3492,48 @@
+         "node": ">=0.10.0"
+       }
+     },
++    "node_modules/react-router": {
++      "version": "7.9.3",
++      "resolved": "https://registry.npmjs.org/react-router/-/react-router-7.9.3.tgz",
++      "integrity": "sha512-4o2iWCFIwhI/eYAIL43+cjORXYn/aRQPgtFRRZb3VzoyQ5Uej0Bmqj7437L97N9NJW4wnicSwLOLS+yCXfAPgg==",
++      "dependencies": {
++        "cookie": "^1.0.1",
++        "set-cookie-parser": "^2.6.0"
++      },
++      "engines": {
++        "node": ">=20.0.0"
++      },
++      "peerDependencies": {
++        "react": ">=18",
++        "react-dom": ">=18"
++      },
++      "peerDependenciesMeta": {
++        "react-dom": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/react-router-dom": {
++      "version": "7.9.3",
++      "resolved": "https://registry.npmjs.org/react-router-dom/-/react-router-dom-7.9.3.tgz",
++      "integrity": "sha512-1QSbA0TGGFKTAc/aWjpfW/zoEukYfU4dc1dLkT/vvf54JoGMkW+fNA+3oyo2gWVW1GM7BxjJVHz5GnPJv40rvg==",
++      "dependencies": {
++        "react-router": "7.9.3"
++      },
++      "engines": {
++        "node": ">=20.0.0"
++      },
++      "peerDependencies": {
++        "react": ">=18",
++        "react-dom": ">=18"
++      }
++    },
++    "node_modules/resize-observer-polyfill": {
++      "version": "1.5.1",
++      "resolved": "https://registry.npmjs.org/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz",
++      "integrity": "sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==",
++      "license": "MIT"
++    },
+     "node_modules/resolve-from": {
+       "version": "4.0.0",
+       "resolved": "https://registry.npmjs.org/resolve-from/-/resolve-from-4.0.0.tgz",
+@@ -2562,6 +3592,15 @@
+       "integrity": "sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==",
+       "license": "MIT"
+     },
++    "node_modules/scroll-into-view-if-needed": {
++      "version": "3.1.0",
++      "resolved": "https://registry.npmjs.org/scroll-into-view-if-needed/-/scroll-into-view-if-needed-3.1.0.tgz",
++      "integrity": "sha512-49oNpRjWRvnU8NyGVmUaYG4jtTkNonFZI86MmGRDqBphEK2EXT9gdEUoQPZhuBM8yWHxCWbobltqYO5M4XrUvQ==",
++      "license": "MIT",
++      "dependencies": {
++        "compute-scroll-into-view": "^3.0.2"
++      }
++    },
+     "node_modules/semver": {
+       "version": "6.3.1",
+       "resolved": "https://registry.npmjs.org/semver/-/semver-6.3.1.tgz",
+@@ -2572,6 +3611,11 @@
+         "semver": "bin/semver.js"
+       }
+     },
++    "node_modules/set-cookie-parser": {
++      "version": "2.7.1",
++      "resolved": "https://registry.npmjs.org/set-cookie-parser/-/set-cookie-parser-2.7.1.tgz",
++      "integrity": "sha512-IOc8uWeOZgnb3ptbCURJWNjWUPcO3ZnTTdzsurqERrP6nPyv+paC55vJM0LpOlT2ne+Ix+9+CRG1MNLlyZ4GjQ=="
++    },
+     "node_modules/shebang-command": {
+       "version": "2.0.0",
+       "resolved": "https://registry.npmjs.org/shebang-command/-/shebang-command-2.0.0.tgz",
+@@ -2605,6 +3649,12 @@
+         "node": ">=0.10.0"
+       }
+     },
++    "node_modules/string-convert": {
++      "version": "0.2.1",
++      "resolved": "https://registry.npmjs.org/string-convert/-/string-convert-0.2.1.tgz",
++      "integrity": "sha512-u/1tdPl4yQnPBjnVrmdLo9gtuLvELKsAoRapekWggdiQNvvvum+jYF329d84NAa660KQw7pB2n36KrIKVoXa3A==",
++      "license": "MIT"
++    },
+     "node_modules/strip-json-comments": {
+       "version": "3.1.1",
+       "resolved": "https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-3.1.1.tgz",
+@@ -2618,6 +3668,12 @@
+         "url": "https://github.com/sponsors/sindresorhus"
+       }
+     },
++    "node_modules/stylis": {
++      "version": "4.3.6",
++      "resolved": "https://registry.npmjs.org/stylis/-/stylis-4.3.6.tgz",
++      "integrity": "sha512-yQ3rwFWRfwNUY7H5vpU0wfdkNSnvnJinhF9830Swlaxl03zsOjCfmX0ugac+3LtK0lYSgwL/KXc8oYL3mG4YFQ==",
++      "license": "MIT"
++    },
+     "node_modules/supports-color": {
+       "version": "7.2.0",
+       "resolved": "https://registry.npmjs.org/supports-color/-/supports-color-7.2.0.tgz",
+@@ -2631,6 +3687,15 @@
+         "node": ">=8"
+       }
+     },
++    "node_modules/throttle-debounce": {
++      "version": "5.0.2",
++      "resolved": "https://registry.npmjs.org/throttle-debounce/-/throttle-debounce-5.0.2.tgz",
++      "integrity": "sha512-B71/4oyj61iNH0KeCamLuE2rmKuTO5byTOSVwECM5FA7TiAiAW+UqTKZ9ERueC4qvgSttUhdmq1mXC3kJqGX7A==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=12.22"
++      }
++    },
+     "node_modules/tinyglobby": {
+       "version": "0.2.15",
+       "resolved": "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.15.tgz",
+@@ -2648,6 +3713,12 @@
+         "url": "https://github.com/sponsors/SuperchupuDev"
+       }
+     },
++    "node_modules/toggle-selection": {
++      "version": "1.0.6",
++      "resolved": "https://registry.npmjs.org/toggle-selection/-/toggle-selection-1.0.6.tgz",
++      "integrity": "sha512-BiZS+C1OS8g/q2RRbJmy59xpyghNBqrr6k5L/uKBGRsTfxmu3ffiRnd8mlGPUVayg8pvfi5urfnu8TU7DVOkLQ==",
++      "license": "MIT"
++    },
+     "node_modules/type-check": {
+       "version": "0.4.0",
+       "resolved": "https://registry.npmjs.org/type-check/-/type-check-0.4.0.tgz",
+diff --git a/package.json b/package.json
+index 6ea7f2c..3454dc9 100644
+--- a/package.json
++++ b/package.json
+@@ -10,8 +10,10 @@
+     "preview": "vite preview"
+   },
+   "dependencies": {
++    "antd": "^5.27.4",
+     "react": "^19.1.1",
+     "react-dom": "^19.1.1",
++    "react-router-dom": "^7.9.3",
+     "uuid": "^13.0.0"
+   },
+   "devDependencies": {
+diff --git a/some-refactoring.patch b/some-refactoring.patch
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/App.css b/src/App.css
+new file mode 100644
+index 0000000..5c7069e
+--- /dev/null
++++ b/src/App.css
+@@ -0,0 +1,22 @@
++/* App Styles */
++.app {
++  min-height: 100vh;
++  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
++}
++
++.main-content {
++  min-height: calc(100vh - 200px);
++  padding-bottom: 2rem;
++}
++
++/* Global styles */
++* {
++  box-sizing: border-box;
++}
++
++body {
++  margin: 0;
++  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
++  -webkit-font-smoothing: antialiased;
++  -moz-osx-font-smoothing: grayscale;
++}
+diff --git a/src/App.jsx b/src/App.jsx
+index 194024c..27f579b 100644
+--- a/src/App.jsx
++++ b/src/App.jsx
+@@ -1,106 +1,26 @@
+-import { useState, useEffect} from "react"
+-import {v4 as uuidv4} from 'uuid'
++import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
++import Header from './components/Header/Header';
++import Navigation from './components/Navigation/Navigation';
++import HomePage from './pages/HomePage';
++import TodosPage from './pages/TodosPage';
++import AboutPage from './pages/AboutPage';
++import './App.css';
+ 
+ function App() {
+-  const [todos, setTodos] = useState(JSON.parse(localStorage.getItem("todos")) || [])
+-  const [todo, setTodo] = useState({id: null, text: '', completed: false})
+-  const [todoFilter, setTodoFilter] = useState('')
+-
+-  const handleSubmit = e => {
+-    e.preventDefault()
+-    if (todo.text.trim() === '') return;
+-    setTodos(todos.concat(todo))
+-    setTodo({id: null, text: '', completed: false})
+-  }
+-
+-  const handleChange = e => {
+-    setTodo({id: uuidv4(), text: e.target.value, completed: false})
+-  }
+-
+-  const deleteTodo = id => {
+-    setTodos(t => t.filter(todo => todo.id !== id))
+-  }
+-  
+-  const toggleComplete = id => {
+-    setTodos(t => t.map(todo => todo.id === id ? {...todo, completed: !todo.completed} : todo ))
+-  }
+-
+-  const moveTaskUp = index => {
+-    if (index === 0) return
+-    const updatedTodos = [...todos]
+-    updatedTodos[index] = todos[index - 1]
+-    updatedTodos[index - 1] = todos[index]
+-    setTodos(updatedTodos)
+-  }
+-
+-  const moveTaskDown = index => {
+-    if (index === todos.length - 1) return
+-    const updatedTodos = [...todos]
+-    updatedTodos[index] = todos[index + 1]
+-    updatedTodos[index + 1] = todos[index]
+-    setTodos(updatedTodos)
+-  }
+-
+-  const runFilter = e => {
+-    setTodoFilter(e.target.value)
+-  }
+-  useEffect(() => {
+-    localStorage.setItem("todos", JSON.stringify(todos))
+-  }, [todos])
+-
+-  const shown = todos.length > 0 && todos.filter(t => t.text.toLowerCase().includes(todoFilter.toLowerCase())) 
+-
+   return (
+-  <div className="todo-app">
+-    <h1>Welcome to your Todos Board<span className='star'>&#127775;</span></h1>
+-    <Input value={todo.text} onChange={handleChange} onSubmit={handleSubmit}/>
+-    <hr />
+-    <h2>Todos</h2>
+-    
+-    <input
+-      className = "filter"
+-      type="text"
+-      placeholder="Filter todos"
+-      onChange={runFilter}/>
+-    <TodoList 
+-    toggleComplete={toggleComplete}
+-    todos={shown}
+-    deleteTodo={deleteTodo}
+-    moveUp={moveTaskUp}
+-    moveDown={moveTaskDown}
+-    />
+-  </div>
+-  )
++    <Router>
++      <div className="app">
++        <Navigation />
++        <main className="main-content">
++          <Routes>
++            <Route path="/" element={<HomePage />} />
++            <Route path="/todos" element={<TodosPage />} />
++            <Route path="/about" element={<AboutPage />} />
++          </Routes>
++        </main>
++      </div>
++    </Router>
++  );
+ }
+ 
+-export default App
+-
+-const Input = ({value, onSubmit, onChange}) => {
+-  return (
+-  <form onSubmit={onSubmit}>
+-    <input value={value} onChange={onChange} type="text" placeholder="Enter your todo here..." />
+-    <button type='submit'>Add todo</button>
+-  </form>
+-  )
+-}
+-
+-const TodoList = ({toggleComplete, todos, deleteTodo, moveUp, moveDown}) => {
+-  return (
+-    <ul className="todo-list">
+-      {todos && todos.map((todo, index) => {
+-        return (
+-        <div className="container" key={todo.id}>
+-          <li
+-          onClick={() => toggleComplete(todo.id)}
+-          className={todo.completed ? "complete" : ""}>
+-          {todo.text}
+-          </li>
+-          <button className="delete-btn" onClick={() => deleteTodo(todo.id)}>&#128465;</button>
+-          <button className="arrow-btn" onClick={() => moveUp(index)}>&uarr;</button>
+-          <button className="arrow-btn" onClick={() => moveDown(index)}>&darr;</button>
+-        </div>
+-        )
+-      })}
+-    </ul>
+-  )
+-}
++export default App;
+diff --git a/src/components/FilterTodos/FilterTodos.jsx b/src/components/FilterTodos/FilterTodos.jsx
+new file mode 100644
+index 0000000..0ca2417
+--- /dev/null
++++ b/src/components/FilterTodos/FilterTodos.jsx
+@@ -0,0 +1,18 @@
++import './filterTodos.css';
++import { SearchOutlined } from '@ant-design/icons';
++
++export const FilterTodos = ({ runFilter }) => (
++  <div className="filter-container">
++    <div className="filter-wrapper">
++      <SearchOutlined className="filter-icon" />
++      <input
++        className="filter-input"
++        type="text"
++        placeholder="Search your todos..."
++        onChange={runFilter}
++      />
++    </div>
++  </div>
++);
++
++export default FilterTodos;
+diff --git a/src/components/FilterTodos/filterTodos.css b/src/components/FilterTodos/filterTodos.css
+new file mode 100644
+index 0000000..4a3fa27
+--- /dev/null
++++ b/src/components/FilterTodos/filterTodos.css
+@@ -0,0 +1,80 @@
++/* Beautiful FilterTodos Styling */
++.filter-container {
++  max-width: 600px;
++  margin: 0 auto 2rem auto;
++  padding: 0 1rem;
++}
++
++.filter-wrapper {
++  position: relative;
++  display: flex;
++  align-items: center;
++}
++
++.filter-icon {
++  position: absolute;
++  left: 1rem;
++  color: #999;
++  font-size: 1.2rem;
++  z-index: 2;
++  transition: color 0.3s ease;
++}
++
++.filter-input {
++  width: 100%;
++  padding: 1rem 1rem 1rem 3rem;
++  border: 2px solid #e1e5e9;
++  border-radius: 12px;
++  font-size: 1rem;
++  color: #333;
++  background: white;
++  transition: all 0.3s ease;
++  outline: none;
++  box-sizing: border-box;
++  font-family: inherit;
++  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
++}
++
++.filter-input:focus {
++  border-color: #667eea;
++  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1), 0 4px 12px rgba(0, 0, 0, 0.1);
++  transform: translateY(-1px);
++}
++
++.filter-input:focus + .filter-icon,
++.filter-wrapper:focus-within .filter-icon {
++  color: #667eea;
++}
++
++.filter-input::placeholder {
++  color: #999;
++  font-weight: 400;
++}
++
++/* Responsive Design */
++@media (max-width: 768px) {
++  .filter-container {
++    margin: 0 auto 1.5rem auto;
++    padding: 0 0.5rem;
++  }
++
++  .filter-input {
++    font-size: 0.95rem;
++    padding: 0.875rem 0.875rem 0.875rem 2.75rem;
++  }
++
++  .filter-icon {
++    font-size: 1.1rem;
++    left: 0.875rem;
++  }
++}
++
++@media (max-width: 480px) {
++  .filter-input {
++    padding: 0.75rem 0.75rem 0.75rem 2.5rem;
++  }
++
++  .filter-icon {
++    left: 0.75rem;
++  }
++}
+diff --git a/src/components/Header/Header.css b/src/components/Header/Header.css
+new file mode 100644
+index 0000000..7168df4
+--- /dev/null
++++ b/src/components/Header/Header.css
+@@ -0,0 +1,267 @@
++/* Modern and fancy header styles */
++.header {
++  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
++  padding: 2rem 1rem;
++  text-align: center;
++  position: relative;
++  overflow: hidden;
++  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
++}
++
++/* Add animated background particles */
++.header::before {
++  content: '';
++  position: absolute;
++  top: 0;
++  left: 0;
++  right: 0;
++  bottom: 0;
++  background: radial-gradient(
++      circle at 20% 80%,
++      rgba(255, 255, 255, 0.1) 0%,
++      transparent 50%
++    ),
++    radial-gradient(
++      circle at 80% 20%,
++      rgba(255, 255, 255, 0.1) 0%,
++      transparent 50%
++    ),
++    radial-gradient(
++      circle at 40% 40%,
++      rgba(255, 255, 255, 0.05) 0%,
++      transparent 50%
++    );
++  animation: float 6s ease-in-out infinite;
++}
++
++@keyframes float {
++  0%,
++  100% {
++    transform: translateY(0px) rotate(0deg);
++  }
++  50% {
++    transform: translateY(-10px) rotate(2deg);
++  }
++}
++
++.header-content {
++  position: relative;
++  z-index: 1;
++}
++
++.header-title {
++  margin: 0 0 1rem 0;
++  font-size: 2.5rem;
++  font-weight: 700;
++  color: white;
++  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
++  line-height: 1.2;
++  display: flex;
++  flex-direction: column;
++  align-items: center;
++  gap: 0.5rem;
++}
++
++.title-text {
++  font-size: 1.2rem;
++  font-weight: 400;
++  opacity: 0.9;
++  letter-spacing: 2px;
++  text-transform: uppercase;
++}
++
++.title-highlight {
++  font-size: 3rem;
++  font-weight: 800;
++  background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
++  background-size: 200% 200%;
++  -webkit-background-clip: text;
++  -webkit-text-fill-color: transparent;
++  background-clip: text;
++  animation: shimmer 3s ease-in-out infinite;
++  position: relative;
++}
++
++@keyframes shimmer {
++  0%,
++  100% {
++    background-position: 0% 50%;
++  }
++  50% {
++    background-position: 100% 50%;
++  }
++}
++
++.star-container {
++  display: flex;
++  gap: 0.5rem;
++  margin-left: 1rem;
++  align-items: center;
++}
++
++.star-icon {
++  color: #ffd700;
++  font-size: 2rem;
++  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
++  animation: twinkle 2s ease-in-out infinite;
++}
++
++.star-icon-2 {
++  animation-delay: 0.7s;
++  font-size: 1.5rem;
++}
++
++.star-icon-3 {
++  animation-delay: 1.4s;
++  font-size: 1.8rem;
++}
++
++@keyframes twinkle {
++  0%,
++  100% {
++    transform: scale(1) rotate(0deg);
++    opacity: 1;
++  }
++  50% {
++    transform: scale(1.2) rotate(180deg);
++    opacity: 0.8;
++  }
++}
++
++.header-subtitle {
++  margin: 0;
++  font-size: 1.1rem;
++  color: rgba(255, 255, 255, 0.9);
++  font-weight: 300;
++  letter-spacing: 1px;
++  opacity: 0;
++  animation: fadeInUp 1s ease-out 0.5s forwards;
++}
++
++@keyframes fadeInUp {
++  from {
++    opacity: 0;
++    transform: translateY(20px);
++  }
++  to {
++    opacity: 1;
++    transform: translateY(0);
++  }
++}
++
++.header-decoration {
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  margin-top: 2rem;
++  gap: 1rem;
++  position: relative;
++  z-index: 1;
++}
++
++.decoration-line {
++  width: 80px;
++  height: 2px;
++  background: linear-gradient(
++    90deg,
++    transparent,
++    rgba(255, 255, 255, 0.6),
++    transparent
++  );
++  animation: pulse 2s ease-in-out infinite;
++}
++
++.decoration-dots {
++  display: flex;
++  gap: 0.5rem;
++}
++
++.decoration-dots span {
++  width: 8px;
++  height: 8px;
++  border-radius: 50%;
++  background: rgba(255, 255, 255, 0.8);
++  animation: bounce 1.5s ease-in-out infinite;
++}
++
++.decoration-dots span:nth-child(2) {
++  animation-delay: 0.3s;
++}
++
++.decoration-dots span:nth-child(3) {
++  animation-delay: 0.6s;
++}
++
++@keyframes pulse {
++  0%,
++  100% {
++    opacity: 0.6;
++  }
++  50% {
++    opacity: 1;
++  }
++}
++
++@keyframes bounce {
++  0%,
++  100% {
++    transform: translateY(0);
++  }
++  50% {
++    transform: translateY(-10px);
++  }
++}
++
++/* Responsive design */
++@media (max-width: 768px) {
++  .header {
++    padding: 1.5rem 1rem;
++  }
++
++  .header-title {
++    font-size: 2rem;
++  }
++
++  .title-text {
++    font-size: 1rem;
++  }
++
++  .title-highlight {
++    font-size: 2.2rem;
++  }
++
++  .star-container {
++    margin-left: 0;
++    margin-top: 0.5rem;
++  }
++
++  .star-icon {
++    font-size: 1.5rem;
++  }
++
++  .star-icon-2 {
++    font-size: 1.2rem;
++  }
++
++  .star-icon-3 {
++    font-size: 1.3rem;
++  }
++}
++
++@media (max-width: 480px) {
++  .header-title {
++    font-size: 1.5rem;
++  }
++
++  .title-highlight {
++    font-size: 1.8rem;
++  }
++
++  .header-subtitle {
++    font-size: 1rem;
++  }
++
++  .decoration-line {
++    width: 50px;
++  }
++}
+diff --git a/src/components/Header/Header.jsx b/src/components/Header/Header.jsx
+new file mode 100644
+index 0000000..ba63dc1
+--- /dev/null
++++ b/src/components/Header/Header.jsx
+@@ -0,0 +1,30 @@
++import './Header.css';
++import { StarFilled } from '@ant-design/icons';
++
++const Header = () => (
++  <header className="header">
++    <div className="header-content">
++      <h1 className="header-title">
++        <span className="title-text">Welcome to your</span>
++        <span className="title-highlight">Todos Board</span>
++        <span className="star-container">
++          <StarFilled className="star-icon" />
++          <StarFilled className="star-icon star-icon-2" />
++          <StarFilled className="star-icon star-icon-3" />
++        </span>
++      </h1>
++      <p className="header-subtitle">Organize your tasks with style ✨</p>
++    </div>
++    <div className="header-decoration">
++      <div className="decoration-line"></div>
++      <div className="decoration-dots">
++        <span></span>
++        <span></span>
++        <span></span>
++      </div>
++      <div className="decoration-line"></div>
++    </div>
++  </header>
++);
++
++export default Header;
+diff --git a/src/components/Navigation/Navigation.css b/src/components/Navigation/Navigation.css
+new file mode 100644
+index 0000000..6ae32e9
+--- /dev/null
++++ b/src/components/Navigation/Navigation.css
+@@ -0,0 +1,129 @@
++/* Navigation Styles */
++.navigation {
++  background: white;
++  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
++  position: sticky;
++  top: 0;
++  z-index: 100;
++  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
++}
++
++.nav-container {
++  max-width: 1200px;
++  margin: 0 auto;
++  padding: 0 2rem;
++  display: flex;
++  align-items: center;
++  justify-content: space-between;
++  height: 70px;
++}
++
++.nav-logo {
++  display: flex;
++  align-items: center;
++  gap: 0.75rem;
++  text-decoration: none;
++  font-size: 1.5rem;
++  font-weight: 700;
++  color: #333;
++  transition: color 0.3s ease;
++}
++
++.nav-logo:hover {
++  color: #667eea;
++}
++
++.logo-icon {
++  font-size: 1.8rem;
++  color: #667eea;
++}
++
++.nav-menu {
++  display: flex;
++  list-style: none;
++  margin: 0;
++  padding: 0;
++  gap: 1rem;
++}
++
++.nav-item {
++  margin: 0;
++}
++
++.nav-link {
++  display: flex;
++  align-items: center;
++  gap: 0.5rem;
++  padding: 0.75rem 1.25rem;
++  text-decoration: none;
++  color: #666;
++  font-weight: 500;
++  border-radius: 8px;
++  transition: all 0.3s ease;
++  font-size: 1rem;
++}
++
++.nav-link:hover {
++  color: #667eea;
++  background: rgba(102, 126, 234, 0.1);
++  transform: translateY(-1px);
++}
++
++.nav-link.active {
++  color: white;
++  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
++  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
++}
++
++.nav-link.active:hover {
++  transform: translateY(-2px);
++  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
++}
++
++.nav-text {
++  font-weight: inherit;
++}
++
++/* Responsive Design */
++@media (max-width: 768px) {
++  .nav-container {
++    padding: 0 1rem;
++    height: 60px;
++  }
++
++  .nav-logo {
++    font-size: 1.3rem;
++  }
++
++  .logo-icon {
++    font-size: 1.5rem;
++  }
++
++  .nav-menu {
++    gap: 0.5rem;
++  }
++
++  .nav-link {
++    padding: 0.5rem 0.75rem;
++    font-size: 0.9rem;
++  }
++
++  .nav-text {
++    display: none;
++  }
++}
++
++@media (max-width: 480px) {
++  .nav-container {
++    padding: 0 0.5rem;
++  }
++
++  .nav-logo {
++    font-size: 1.1rem;
++    gap: 0.5rem;
++  }
++
++  .nav-link {
++    padding: 0.5rem;
++  }
++}
+diff --git a/src/components/Navigation/Navigation.jsx b/src/components/Navigation/Navigation.jsx
+new file mode 100644
+index 0000000..d671dc8
+--- /dev/null
++++ b/src/components/Navigation/Navigation.jsx
+@@ -0,0 +1,46 @@
++import { Link, useLocation } from 'react-router-dom';
++import {
++  HomeOutlined,
++  CheckSquareOutlined,
++  InfoCircleOutlined,
++} from '@ant-design/icons';
++import './Navigation.css';
++
++const Navigation = () => {
++  const location = useLocation();
++
++  const navItems = [
++    { path: '/', label: 'Home', icon: <HomeOutlined /> },
++    { path: '/todos', label: 'Todos', icon: <CheckSquareOutlined /> },
++    { path: '/about', label: 'About', icon: <InfoCircleOutlined /> },
++  ];
++
++  return (
++    <nav className="navigation">
++      <div className="nav-container">
++        <Link to="/" className="nav-logo">
++          <CheckSquareOutlined className="logo-icon" />
++          TodoMaster
++        </Link>
++
++        <ul className="nav-menu">
++          {navItems.map((item) => (
++            <li key={item.path} className="nav-item">
++              <Link
++                to={item.path}
++                className={`nav-link ${
++                  location.pathname === item.path ? 'active' : ''
++                }`}
++              >
++                {item.icon}
++                <span className="nav-text">{item.label}</span>
++              </Link>
++            </li>
++          ))}
++        </ul>
++      </div>
++    </nav>
++  );
++};
++
++export default Navigation;
+diff --git a/src/components/TodoForm/TodoForm.css b/src/components/TodoForm/TodoForm.css
+new file mode 100644
+index 0000000..bd08404
+--- /dev/null
++++ b/src/components/TodoForm/TodoForm.css
+@@ -0,0 +1,117 @@
++/* Clean and Beautiful TodoForm Styling */
++.todo-form-wrapper {
++  max-width: 600px;
++  margin: 2rem auto;
++  padding: 0 1rem;
++  align-self: flex-start;
++}
++
++.todo-form {
++  background: white;
++  padding: 2rem;
++  border-radius: 16px;
++  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
++  border: 1px solid rgba(102, 126, 234, 0.1);
++  display: flex;
++  gap: 1rem;
++  align-items: center;
++}
++
++.input-container {
++  flex: 1;
++  position: relative;
++}
++
++.input-icon {
++  position: absolute;
++  left: 1rem;
++  top: 50%;
++  transform: translateY(-50%);
++  color: #999;
++  font-size: 1.2rem;
++  z-index: 2;
++  transition: color 0.3s ease;
++}
++
++.todo-input {
++  width: 100%;
++  padding: 1rem 1rem 1rem 3rem;
++  border: 2px solid #e1e5e9;
++  border-radius: 12px;
++  font-size: 1.1rem;
++  color: #333;
++  background: #fafbfc;
++  transition: all 0.3s ease;
++  outline: none;
++  box-sizing: border-box;
++  font-family: inherit;
++}
++
++.todo-input:focus {
++  border-color: #667eea;
++  background: white;
++  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
++}
++
++.todo-input:focus + .input-icon {
++  color: #667eea;
++}
++
++.submit-button {
++  padding: 1rem 1.5rem;
++  border: none;
++  border-radius: 12px;
++  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
++  color: white;
++  font-size: 1rem;
++  font-weight: 600;
++  cursor: pointer;
++  transition: all 0.3s ease;
++  display: flex;
++  align-items: center;
++  gap: 0.5rem;
++  white-space: nowrap;
++  font-family: inherit;
++}
++
++.submit-button:hover {
++  transform: translateY(-2px);
++  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
++}
++
++.submit-button:active {
++  transform: translateY(0);
++}
++
++.button-icon {
++  font-size: 1rem;
++}
++
++/* Responsive Design */
++@media (max-width: 768px) {
++  .todo-form {
++    flex-direction: column;
++    gap: 1.5rem;
++    padding: 1.5rem;
++  }
++
++  .submit-button {
++    justify-content: center;
++  }
++}
++
++@media (max-width: 480px) {
++  .todo-form-wrapper {
++    margin: 1rem auto;
++    padding: 0 0.5rem;
++  }
++
++  .todo-form {
++    padding: 1rem;
++  }
++
++  .todo-input {
++    font-size: 1rem;
++    padding: 0.875rem 0.875rem 0.875rem 2.75rem;
++  }
++}
+diff --git a/src/components/TodoForm/TodoForm.jsx b/src/components/TodoForm/TodoForm.jsx
+new file mode 100644
+index 0000000..da9e2ac
+--- /dev/null
++++ b/src/components/TodoForm/TodoForm.jsx
+@@ -0,0 +1,27 @@
++import './TodoForm.css';
++import { PlusOutlined, EditOutlined } from '@ant-design/icons';
++
++const TodoForm = ({ value, onSubmit, onChange }) => {
++  return (
++    <div className="todo-form-wrapper">
++      <form className="todo-form" onSubmit={onSubmit}>
++        <div className="input-container">
++          <EditOutlined className="input-icon" />
++          <input
++            value={value}
++            onChange={onChange}
++            type="text"
++            placeholder="Enter your todo here..."
++            className="todo-input"
++          />
++        </div>
++        <button type="submit" className="submit-button">
++          <PlusOutlined className="button-icon" />
++          Add todo
++        </button>
++      </form>
++    </div>
++  );
++};
++
++export default TodoForm;
+diff --git a/src/components/TodoList/TodoList.jsx b/src/components/TodoList/TodoList.jsx
+new file mode 100644
+index 0000000..6f50927
+--- /dev/null
++++ b/src/components/TodoList/TodoList.jsx
+@@ -0,0 +1,217 @@
++import './TodoList.css';
++import FilterTodos from '../FilterTodos/FilterTodos';
++import { useState, useEffect } from 'react';
++import {
++  DeleteOutlined,
++  ArrowUpOutlined,
++  ArrowDownOutlined,
++  CheckCircleOutlined,
++  ClockCircleOutlined,
++  EditOutlined,
++  ClearOutlined,
++  LeftOutlined,
++  RightOutlined,
++} from '@ant-design/icons';
++
++const TodoList = ({
++  toggleComplete,
++  todos,
++  deleteTodo,
++  moveUp,
++  moveDown,
++  runFilter,
++  clearAll,
++}) => {
++  const [currentPage, setCurrentPage] = useState(1);
++  const todosPerPage = 5;
++
++  // Reset pagination when todos change (especially when cleared)
++  useEffect(() => {
++    if (!todos || todos.length === 0) {
++      setCurrentPage(1);
++    } else {
++      // If current page is beyond available pages, reset to last page
++      const maxPages = Math.ceil(todos.length / todosPerPage);
++      if (currentPage > maxPages) {
++        setCurrentPage(Math.max(1, maxPages));
++      }
++    }
++  }, [todos, currentPage, todosPerPage]);
++
++  // Calculate pagination with better error handling
++  const safeClientTodos = todos || [];
++  const totalPages = Math.ceil(safeClientTodos.length / todosPerPage);
++  const startIndex = (currentPage - 1) * todosPerPage;
++  const endIndex = startIndex + todosPerPage;
++  const currentTodos = safeClientTodos.slice(startIndex, endIndex);
++
++  // Reset to first page when todos change
++  const handlePageChange = (newPage) => {
++    setCurrentPage(newPage);
++  };
++
++  // Handle moving items with pagination context
++  const handleMoveUp = (index) => {
++    const actualIndex = startIndex + index;
++    moveUp(actualIndex);
++  };
++
++  const handleMoveDown = (index) => {
++    const actualIndex = startIndex + index;
++    moveDown(actualIndex);
++  };
++  return (
++    <div className="todo-list-container">
++      <div className="todo-list-header">
++        <h2 className="todo-list-title">
++          <CheckCircleOutlined className="title-icon" />
++          Your Tasks
++        </h2>
++
++        <div className="todo-stats">
++          <span className="todo-count">
++            {safeClientTodos.length}{' '}
++            {safeClientTodos.length === 1 ? 'task' : 'tasks'}
++          </span>
++          <span className="completed-count">
++            {safeClientTodos.filter((todo) => todo.completed).length} completed
++          </span>
++
++          {safeClientTodos.length > 0 && (
++            <button
++              className="clear-all-btn"
++              onClick={clearAll}
++              title="Delete all tasks and clear storage"
++            >
++              <ClearOutlined className="clear-icon" />
++              Clear All
++            </button>
++          )}
++        </div>
++      </div>
++
++      {/* Filter Component */}
++      <div className="filter-section">
++        <FilterTodos runFilter={runFilter} />
++      </div>
++
++      <ul className="todo-list">
++        {currentTodos && currentTodos.length > 0 ? (
++          currentTodos.map((todo, index) => {
++            const actualIndex = startIndex + index;
++            return (
++              <div className="todo-container" key={todo.id}>
++                <li
++                  onClick={() => toggleComplete(todo.id)}
++                  className={`todo-item ${
++                    todo.completed ? 'completed' : 'pending'
++                  }`}
++                >
++                  <div className="todo-content">
++                    <div className="todo-icon">
++                      {todo.completed ? (
++                        <CheckCircleOutlined className="status-icon completed-icon" />
++                      ) : (
++                        <ClockCircleOutlined className="status-icon pending-icon" />
++                      )}
++                    </div>
++                    <span className="todo-text">{todo.text}</span>
++                  </div>
++                </li>
++
++                <div className="todo-actions">
++                  <button className="action-btn edit-btn" title="Edit task">
++                    <EditOutlined />
++                  </button>
++
++                  <button
++                    className="action-btn move-btn move-up"
++                    onClick={() => handleMoveUp(index)}
++                    disabled={actualIndex === 0}
++                    title="Move up"
++                  >
++                    <ArrowUpOutlined />
++                  </button>
++
++                  <button
++                    className="action-btn move-btn move-down"
++                    onClick={() => handleMoveDown(index)}
++                    disabled={actualIndex === safeClientTodos.length - 1}
++                    title="Move down"
++                  >
++                    <ArrowDownOutlined />
++                  </button>
++
++                  <button
++                    className="action-btn delete-btn"
++                    onClick={() => deleteTodo(todo.id)}
++                    title="Delete task"
++                  >
++                    <DeleteOutlined />
++                  </button>
++                </div>
++              </div>
++            );
++          })
++        ) : (
++          <div className="empty-state">
++            <ClockCircleOutlined className="empty-icon" />
++            <p className="empty-message">No tasks yet!</p>
++            <p className="empty-subtitle">Add your first task to get started</p>
++          </div>
++        )}
++      </ul>
++
++      {/* Pagination Controls */}
++      {safeClientTodos.length > todosPerPage && (
++        <div className="pagination-container">
++          <div className="pagination-info">
++            Showing {startIndex + 1}-
++            {Math.min(endIndex, safeClientTodos.length)} of{' '}
++            {safeClientTodos.length} tasks
++          </div>
++
++          <div className="pagination-controls">
++            <button
++              className="pagination-btn"
++              onClick={() => handlePageChange(currentPage - 1)}
++              disabled={currentPage === 1}
++              title="Previous page"
++            >
++              <LeftOutlined />
++              Previous
++            </button>
++
++            <div className="pagination-pages">
++              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
++                (page) => (
++                  <button
++                    key={page}
++                    className={`pagination-page ${
++                      page === currentPage ? 'active' : ''
++                    }`}
++                    onClick={() => handlePageChange(page)}
++                  >
++                    {page}
++                  </button>
++                )
++              )}
++            </div>
++
++            <button
++              className="pagination-btn"
++              onClick={() => handlePageChange(currentPage + 1)}
++              disabled={currentPage === totalPages}
++              title="Next page"
++            >
++              Next
++              <RightOutlined />
++            </button>
++          </div>
++        </div>
++      )}
++    </div>
++  );
++};
++
++export default TodoList;
+diff --git a/src/components/TodoList/todoList.css b/src/components/TodoList/todoList.css
+new file mode 100644
+index 0000000..bf523ca
+--- /dev/null
++++ b/src/components/TodoList/todoList.css
+@@ -0,0 +1,528 @@
++/* Modern Todo List Styling */
++.todo-list-container {
++  margin: 2rem auto;
++  padding: 0 1rem;
++  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
++  min-width: 800px;
++}
++
++.todo-list-header {
++  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
++  color: white;
++  padding: 1.5rem 2rem;
++  border-radius: 16px 16px 0 0;
++  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
++}
++
++.todo-list-title {
++  margin: 0 0 1rem 0;
++  font-size: 1.8rem;
++  font-weight: 600;
++  display: flex;
++  align-items: center;
++  gap: 0.75rem;
++}
++
++.title-icon {
++  font-size: 2rem;
++  color: #ffd700;
++  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.3));
++}
++
++.todo-stats {
++  display: flex;
++  gap: 2rem;
++  font-size: 0.95rem;
++  opacity: 0.9;
++  align-items: center;
++  flex-wrap: wrap;
++}
++
++.todo-count,
++.completed-count {
++  background: rgba(255, 255, 255, 0.2);
++  padding: 0.4rem 0.8rem;
++  border-radius: 20px;
++  backdrop-filter: blur(10px);
++}
++
++.clear-all-btn {
++  background: rgba(255, 77, 79, 0.2);
++  border: 1px solid rgba(255, 77, 79, 0.3);
++  color: #ff4d4f;
++  padding: 0.4rem 0.8rem;
++  border-radius: 20px;
++  font-size: 0.85rem;
++  font-weight: 500;
++  cursor: pointer;
++  display: flex;
++  align-items: center;
++  gap: 0.4rem;
++  transition: all 0.3s ease;
++  backdrop-filter: blur(10px);
++  font-family: inherit;
++}
++
++.clear-all-btn:hover {
++  background: rgba(255, 77, 79, 0.3);
++  border-color: rgba(255, 77, 79, 0.5);
++  transform: translateY(-1px);
++}
++
++.clear-all-btn:active {
++  transform: translateY(0);
++}
++
++.clear-icon {
++  font-size: 0.9rem;
++}
++
++.filter-section {
++  background: white;
++  padding: 1.5rem 2rem 0.5rem 2rem;
++  border-left: 1px solid #f0f0f0;
++  border-right: 1px solid #f0f0f0;
++  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
++}
++
++.todo-list {
++  background: white;
++  border-radius: 0 0 16px 16px;
++  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
++  padding: 0;
++  margin: 0;
++  list-style: none;
++  min-height: 200px;
++  overflow: hidden;
++  border-left: 1px solid #f0f0f0;
++  border-right: 1px solid #f0f0f0;
++  border-bottom: 1px solid #f0f0f0;
++}
++
++.todo-container {
++  display: flex;
++  align-items: center;
++  border-bottom: 1px solid #f0f0f0;
++  transition: all 0.3s ease;
++  background: white;
++}
++
++.todo-container:hover {
++  background: linear-gradient(90deg, #f8f9ff 0%, #fff 100%);
++  transform: translateX(4px);
++  box-shadow: inset 4px 0 0 #667eea;
++}
++
++.todo-container:last-child {
++  border-bottom: none;
++}
++
++.todo-item {
++  flex: 1;
++  padding: 1.2rem 1.5rem;
++  cursor: pointer;
++  transition: all 0.3s ease;
++  display: flex;
++  align-items: center;
++}
++
++.todo-content {
++  display: flex;
++  align-items: center;
++  gap: 1rem;
++  width: 100%;
++}
++
++.todo-icon {
++  flex-shrink: 0;
++}
++
++.status-icon {
++  font-size: 1.4rem;
++  transition: all 0.3s ease;
++}
++
++.completed-icon {
++  color: #52c41a;
++  animation: bounce 0.6s ease;
++}
++
++.pending-icon {
++  color: #faad14;
++}
++
++@keyframes bounce {
++  0%,
++  20%,
++  60%,
++  100% {
++    transform: translateY(0);
++  }
++  40% {
++    transform: translateY(-4px);
++  }
++  80% {
++    transform: translateY(-2px);
++  }
++}
++
++.todo-text {
++  font-size: 1.1rem;
++  font-weight: 500;
++  color: #333;
++  transition: all 0.3s ease;
++  flex: 1;
++}
++
++.todo-item.completed .todo-text {
++  text-decoration: line-through;
++  color: #999;
++  opacity: 0.7;
++}
++
++.todo-item.pending .todo-text {
++  color: #333;
++}
++
++.todo-actions {
++  display: flex;
++  gap: 0.5rem;
++  padding: 0 1rem;
++  opacity: 0;
++  transition: opacity 0.3s ease;
++}
++
++.todo-container:hover .todo-actions {
++  opacity: 1;
++}
++
++.action-btn {
++  width: 36px;
++  height: 36px;
++  border: none;
++  border-radius: 8px;
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  cursor: pointer;
++  transition: all 0.3s ease;
++  font-size: 14px;
++  position: relative;
++}
++
++.action-btn:hover {
++  transform: translateY(-2px);
++  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
++}
++
++.action-btn:active {
++  transform: translateY(0);
++}
++
++.action-btn:disabled {
++  opacity: 0.4;
++  cursor: not-allowed;
++  transform: none;
++  box-shadow: none;
++}
++
++.edit-btn {
++  background: linear-gradient(135deg, #13c2c2, #36cfc9);
++  color: white;
++}
++
++.edit-btn:hover:not(:disabled) {
++  background: linear-gradient(135deg, #36cfc9, #13c2c2);
++}
++
++.move-btn {
++  background: linear-gradient(135deg, #722ed1, #9254de);
++  color: white;
++}
++
++.move-btn:hover:not(:disabled) {
++  background: linear-gradient(135deg, #9254de, #722ed1);
++}
++
++.delete-btn {
++  background: linear-gradient(135deg, #ff4d4f, #ff7875);
++  color: white;
++}
++
++.delete-btn:hover:not(:disabled) {
++  background: linear-gradient(135deg, #ff7875, #ff4d4f);
++}
++
++.empty-state {
++  display: flex;
++  flex-direction: column;
++  align-items: center;
++  justify-content: center;
++  padding: 4rem 2rem;
++  color: #999;
++  text-align: center;
++}
++
++.empty-icon {
++  font-size: 4rem;
++  color: #d9d9d9;
++  margin-bottom: 1rem;
++  animation: pulse 2s ease-in-out infinite;
++}
++
++@keyframes pulse {
++  0%,
++  100% {
++    opacity: 0.6;
++  }
++  50% {
++    opacity: 1;
++  }
++}
++
++.empty-message {
++  font-size: 1.4rem;
++  font-weight: 500;
++  margin: 0 0 0.5rem 0;
++  color: #666;
++}
++
++.empty-subtitle {
++  font-size: 1rem;
++  margin: 0;
++  color: #999;
++}
++
++/* Responsive Design */
++@media (max-width: 768px) {
++  .todo-list-container {
++    margin: 1rem auto;
++    padding: 0 0.5rem;
++  }
++
++  .todo-list-header {
++    padding: 1rem 1.5rem;
++  }
++
++  .todo-list-title {
++    font-size: 1.5rem;
++  }
++
++  .todo-stats {
++    flex-direction: column;
++    gap: 0.5rem;
++  }
++
++  .clear-all-btn {
++    align-self: flex-start;
++    font-size: 0.8rem;
++  }
++
++  .filter-section {
++    padding: 1rem 1.5rem 0.5rem 1.5rem;
++  }
++
++  .todo-item {
++    padding: 1rem;
++  }
++
++  .todo-text {
++    font-size: 1rem;
++  }
++
++  .todo-actions {
++    opacity: 1;
++    padding: 0 0.5rem;
++  }
++
++  .action-btn {
++    width: 32px;
++    height: 32px;
++    font-size: 12px;
++  }
++}
++
++@media (max-width: 480px) {
++  .todo-container {
++    flex-direction: column;
++    align-items: stretch;
++  }
++
++  .todo-actions {
++    justify-content: center;
++    padding: 0.5rem 1rem;
++    border-top: 1px solid #f0f0f0;
++    background: #fafafa;
++  }
++
++  .todo-container:hover {
++    transform: none;
++    box-shadow: none;
++  }
++
++  .filter-section {
++    padding: 0.75rem 1rem 0.5rem 1rem;
++  }
++
++  .clear-all-btn {
++    padding: 0.3rem 0.6rem;
++    font-size: 0.75rem;
++  }
++
++  .empty-state {
++    padding: 2rem 1rem;
++  }
++
++  .empty-icon {
++    font-size: 3rem;
++  }
++}
++
++/* Pagination Styles */
++.pagination-container {
++  background: white;
++  padding: 1.5rem 2rem;
++  border-radius: 0 0 16px 16px;
++  border-left: 1px solid #f0f0f0;
++  border-right: 1px solid #f0f0f0;
++  border-bottom: 1px solid #f0f0f0;
++  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
++  margin-top: -1px;
++}
++
++.pagination-info {
++  text-align: center;
++  color: #666;
++  font-size: 0.9rem;
++  margin-bottom: 1rem;
++  font-weight: 500;
++}
++
++.pagination-controls {
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  gap: 1rem;
++}
++
++.pagination-btn {
++  display: flex;
++  align-items: center;
++  gap: 0.5rem;
++  padding: 0.75rem 1rem;
++  border: 2px solid #e1e5e9;
++  border-radius: 8px;
++  background: white;
++  color: #333;
++  font-size: 0.9rem;
++  font-weight: 500;
++  cursor: pointer;
++  transition: all 0.3s ease;
++  font-family: inherit;
++}
++
++.pagination-btn:hover:not(:disabled) {
++  border-color: #667eea;
++  color: #667eea;
++  transform: translateY(-1px);
++  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
++}
++
++.pagination-btn:disabled {
++  opacity: 0.5;
++  cursor: not-allowed;
++  transform: none;
++  box-shadow: none;
++}
++
++.pagination-pages {
++  display: flex;
++  gap: 0.5rem;
++}
++
++.pagination-page {
++  width: 40px;
++  height: 40px;
++  border: 2px solid #e1e5e9;
++  border-radius: 8px;
++  background: white;
++  color: #333;
++  font-size: 0.9rem;
++  font-weight: 500;
++  cursor: pointer;
++  transition: all 0.3s ease;
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  font-family: inherit;
++}
++
++.pagination-page:hover {
++  border-color: #667eea;
++  color: #667eea;
++  transform: translateY(-1px);
++}
++
++.pagination-page.active {
++  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
++  border-color: #667eea;
++  color: white;
++  transform: translateY(-1px);
++  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
++}
++
++/* Responsive Pagination */
++@media (max-width: 768px) {
++  .pagination-container {
++    padding: 1rem 1.5rem;
++  }
++
++  .pagination-controls {
++    flex-direction: column;
++    gap: 1rem;
++  }
++
++  .pagination-btn {
++    font-size: 0.85rem;
++    padding: 0.625rem 0.875rem;
++  }
++
++  .pagination-pages {
++    order: -1;
++  }
++
++  .pagination-page {
++    width: 36px;
++    height: 36px;
++    font-size: 0.8rem;
++  }
++}
++
++@media (max-width: 480px) {
++  .pagination-container {
++    padding: 0.75rem 1rem;
++  }
++
++  .pagination-info {
++    font-size: 0.8rem;
++    margin-bottom: 0.75rem;
++  }
++
++  .pagination-btn {
++    font-size: 0.8rem;
++    padding: 0.5rem 0.75rem;
++    gap: 0.25rem;
++  }
++
++  .pagination-pages {
++    gap: 0.25rem;
++    flex-wrap: wrap;
++    justify-content: center;
++  }
++
++  .pagination-page {
++    width: 32px;
++    height: 32px;
++    font-size: 0.75rem;
++  }
++}
+diff --git a/src/index.css b/src/index.css
+index 1c87a17..252faa0 100644
+--- a/src/index.css
++++ b/src/index.css
+@@ -5,11 +5,11 @@
+ }
+ 
+ body {
+-  background-color: rgb(210, 234, 210);
++  background-color: white;
+   color: #04a;
+-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
++  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
++    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+   text-align: center;
+-  margin-top: 1vw;
+ }
+ h1 {
+   font-size: 3rem;
+@@ -19,21 +19,6 @@ h1 {
+ h2 {
+   font-size: 2rem;
+ }
+-.star {
+-  display: inline-block;
+-  animation: rotation 16s linear infinite ;
+-  transition: scale 0.03s ease-in-out;
+-  user-select: none;
+- }
+-
+-.star:hover {
+-  animation-play-state: paused;
+-  cursor: pointer;
+-}
+-
+-.star:active {
+-  scale: 1.2;
+-}
+ 
+ @keyframes rotation {
+   from {
+@@ -65,80 +50,34 @@ input {
+   letter-spacing: 0.1em;
+   font-size: inherit;
+ }
+-button[type="submit"] {
+-  padding: 0.4em;
+-}
+-
+-.delete-btn {
+-  padding: 0 0.2em;
+-  height: 2rem;
+-}
+-.todo-list {
+-  font-size: 1.4rem;
+-  background-color: brown;
+-  min-height: 50vh;
+-  min-width: 50vw;
+-  width: 55vw;
++button[type='submit'] {
+   padding: 0.8em;
+-  margin: 0 auto;
+-  border: 0.5em solid rgb(153, 80, 12);
+-  color: rgb(34, 12, 0);
+-  display: flex;
+-  flex-direction: column;
+-  justify-content: center;
+-  align-items: center;
+-  list-style-type: none;
+-}
+-
+-.todo-list  li {
+-  flex: 1 1 auto shrink;
+-  display: flex;
+-  justify-content: center;
+-  gap: 4em;
+-  align-items: center;
+-  padding: 0.2em;
+-  margin: 0.3em;
+-  min-width: 10vw;
+-  max-width: 40vw;
+-  border-radius: 10%;
+-  border: 4px solid brown;
+-  background-color: #dea964;
+-  transition: transform 0.2s ease-in-out;
+-  user-select: none;
+ }
+ 
+ .complete {
+   text-decoration: line-through 0.3em;
+ }
+-.todo-list  li:hover {
+-  transform: scale(1.02);
+-  cursor: default;
+-}
++
+ button {
+   font-size: inherit;
+   cursor: pointer;
+   user-select: none;
+ }
+ 
+-.arrow-btn {
+-  width: 0.8em;
++.filter {
++  margin: 0 auto;
+ }
+-.container {
++
++.main-content {
+   display: flex;
+-  justify-content: center;
++  flex-direction: column;
+   align-items: center;
+-  gap: 0.4em;
+-}
+-
+-.filter {
++  gap: 1.5rem;
++  width: 100%;
+   margin: 0 auto;
+ }
+ 
+ @media (max-width: 500px) {
+-  .todo-list {
+-    width: 60vw;
+-  }
+-
+   form {
+     flex-direction: column;
+   }
+@@ -146,4 +85,4 @@ button {
+   input {
+     width: 80vw;
+   }
+-}
+\ No newline at end of file
++}
+diff --git a/src/pages/AboutPage.css b/src/pages/AboutPage.css
+new file mode 100644
+index 0000000..a70f996
+--- /dev/null
++++ b/src/pages/AboutPage.css
+@@ -0,0 +1,141 @@
++/* About Page Styles */
++.about-page {
++  max-width: 1000px;
++  margin: 0 auto;
++  padding: 2rem;
++  min-height: calc(100vh - 200px);
++}
++
++.about-header {
++  text-align: center;
++  margin-bottom: 4rem;
++}
++
++.about-title {
++  font-size: 3rem;
++  font-weight: 700;
++  margin-bottom: 1rem;
++  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
++  -webkit-background-clip: text;
++  -webkit-text-fill-color: transparent;
++  background-clip: text;
++}
++
++.about-subtitle {
++  font-size: 1.2rem;
++  color: #666;
++  max-width: 600px;
++  margin: 0 auto;
++  line-height: 1.6;
++}
++
++.about-content {
++  display: grid;
++  gap: 3rem;
++  margin-bottom: 4rem;
++}
++
++.about-section {
++  background: white;
++  padding: 2.5rem;
++  border-radius: 16px;
++  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
++  border: 1px solid rgba(102, 126, 234, 0.1);
++  text-align: center;
++}
++
++.section-icon {
++  font-size: 3rem;
++  color: #667eea;
++  margin-bottom: 1.5rem;
++}
++
++.about-section h2 {
++  font-size: 1.8rem;
++  font-weight: 600;
++  margin-bottom: 1.5rem;
++  color: #333;
++}
++
++.about-section p {
++  color: #666;
++  line-height: 1.7;
++  font-size: 1.1rem;
++}
++
++.about-stats {
++  display: grid;
++  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
++  gap: 2rem;
++  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
++  padding: 3rem 2rem;
++  border-radius: 16px;
++  color: white;
++  text-align: center;
++}
++
++.stat-item h3 {
++  font-size: 3rem;
++  font-weight: 700;
++  margin-bottom: 0.5rem;
++  color: #ffd700;
++}
++
++.stat-item p {
++  font-size: 1.1rem;
++  opacity: 0.9;
++  font-weight: 500;
++}
++
++/* Responsive Design */
++@media (max-width: 768px) {
++  .about-page {
++    padding: 1rem;
++  }
++
++  .about-title {
++    font-size: 2.5rem;
++  }
++
++  .about-subtitle {
++    font-size: 1.1rem;
++  }
++
++  .about-section {
++    padding: 2rem;
++  }
++
++  .about-section h2 {
++    font-size: 1.5rem;
++  }
++
++  .about-section p {
++    font-size: 1rem;
++  }
++
++  .about-stats {
++    padding: 2rem 1rem;
++  }
++
++  .stat-item h3 {
++    font-size: 2.5rem;
++  }
++}
++
++@media (max-width: 480px) {
++  .about-title {
++    font-size: 2rem;
++  }
++
++  .about-section {
++    padding: 1.5rem;
++  }
++
++  .section-icon {
++    font-size: 2.5rem;
++  }
++
++  .stat-item h3 {
++    font-size: 2rem;
++  }
++}
+diff --git a/src/pages/AboutPage.jsx b/src/pages/AboutPage.jsx
+new file mode 100644
+index 0000000..6de8630
+--- /dev/null
++++ b/src/pages/AboutPage.jsx
+@@ -0,0 +1,70 @@
++import { TeamOutlined, CodeOutlined, HeartFilled } from '@ant-design/icons';
++import './AboutPage.css';
++
++const AboutPage = () => {
++  return (
++    <div className="about-page">
++      <div className="about-header">
++        <h1 className="about-title">About TodoMaster</h1>
++        <p className="about-subtitle">
++          Built with passion for productivity and beautiful design
++        </p>
++      </div>
++
++      <div className="about-content">
++        <div className="about-section">
++          <div className="section-icon">
++            <TeamOutlined />
++          </div>
++          <h2>Our Mission</h2>
++          <p>
++            We believe that staying organized shouldn't be complicated.
++            TodoMaster was created to provide a simple, beautiful, and powerful
++            way to manage your daily tasks and long-term goals.
++          </p>
++        </div>
++
++        <div className="about-section">
++          <div className="section-icon">
++            <CodeOutlined />
++          </div>
++          <h2>Technology</h2>
++          <p>
++            Built with modern web technologies including React, Vite, and Ant
++            Design. Our app is fast, responsive, and provides an excellent user
++            experience across all devices.
++          </p>
++        </div>
++
++        <div className="about-section">
++          <div className="section-icon">
++            <HeartFilled />
++          </div>
++          <h2>Made with Love</h2>
++          <p>
++            Every feature is carefully crafted with attention to detail. From
++            the smooth animations to the intuitive user interface, we've put our
++            heart into making TodoMaster the best it can be.
++          </p>
++        </div>
++      </div>
++
++      <div className="about-stats">
++        <div className="stat-item">
++          <h3>100%</h3>
++          <p>Free to Use</p>
++        </div>
++        <div className="stat-item">
++          <h3>∞</h3>
++          <p>Unlimited Tasks</p>
++        </div>
++        <div className="stat-item">
++          <h3>24/7</h3>
++          <p>Available Offline</p>
++        </div>
++      </div>
++    </div>
++  );
++};
++
++export default AboutPage;
+diff --git a/src/pages/HomePage.css b/src/pages/HomePage.css
+new file mode 100644
+index 0000000..68873f4
+--- /dev/null
++++ b/src/pages/HomePage.css
+@@ -0,0 +1,198 @@
++/* Home Page Styles */
++.home-page {
++  min-height: calc(100vh - 200px);
++}
++
++.home-hero {
++  text-align: center;
++  padding: 4rem 2rem;
++  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
++  color: white;
++  margin-bottom: 4rem;
++}
++
++.hero-content {
++  max-width: 800px;
++  margin: 0 auto;
++}
++
++.hero-title {
++  font-size: 3.5rem;
++  font-weight: 700;
++  margin-bottom: 1.5rem;
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  gap: 1rem;
++}
++
++.hero-star {
++  color: #ffd700;
++  font-size: 3rem;
++  animation: twinkle 2s ease-in-out infinite;
++}
++
++@keyframes twinkle {
++  0%,
++  100% {
++    transform: scale(1) rotate(0deg);
++    opacity: 1;
++  }
++  50% {
++    transform: scale(1.2) rotate(180deg);
++    opacity: 0.8;
++  }
++}
++
++.hero-subtitle {
++  font-size: 1.3rem;
++  margin-bottom: 2.5rem;
++  opacity: 0.9;
++  line-height: 1.6;
++}
++
++.hero-actions {
++  display: flex;
++  gap: 1.5rem;
++  justify-content: center;
++  flex-wrap: wrap;
++}
++
++.cta-button {
++  display: inline-flex;
++  align-items: center;
++  gap: 0.5rem;
++  padding: 1rem 2rem;
++  border-radius: 12px;
++  font-size: 1.1rem;
++  font-weight: 600;
++  text-decoration: none;
++  transition: all 0.3s ease;
++  font-family: inherit;
++}
++
++.cta-button.primary {
++  background: white;
++  color: #667eea;
++  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
++}
++
++.cta-button.primary:hover {
++  transform: translateY(-2px);
++  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
++  color: #667eea;
++}
++
++.cta-button.secondary {
++  background: rgba(255, 255, 255, 0.2);
++  color: white;
++  border: 2px solid rgba(255, 255, 255, 0.3);
++}
++
++.cta-button.secondary:hover {
++  background: rgba(255, 255, 255, 0.3);
++  color: white;
++  transform: translateY(-2px);
++}
++
++.features-section {
++  max-width: 1200px;
++  margin: 0 auto;
++  padding: 0 2rem 4rem 2rem;
++}
++
++.features-title {
++  text-align: center;
++  font-size: 2.5rem;
++  font-weight: 600;
++  margin-bottom: 3rem;
++  color: #333;
++}
++
++.features-grid {
++  display: grid;
++  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
++  gap: 2rem;
++}
++
++.feature-card {
++  background: white;
++  padding: 2.5rem;
++  border-radius: 16px;
++  text-align: center;
++  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
++  border: 1px solid rgba(102, 126, 234, 0.1);
++  transition: transform 0.3s ease;
++}
++
++.feature-card:hover {
++  transform: translateY(-5px);
++}
++
++.feature-icon {
++  font-size: 3rem;
++  color: #667eea;
++  margin-bottom: 1.5rem;
++}
++
++.feature-card h3 {
++  font-size: 1.5rem;
++  font-weight: 600;
++  margin-bottom: 1rem;
++  color: #333;
++}
++
++.feature-card p {
++  color: #666;
++  line-height: 1.6;
++  font-size: 1rem;
++}
++
++/* Responsive Design */
++@media (max-width: 768px) {
++  .hero-title {
++    font-size: 2.5rem;
++    flex-direction: column;
++    gap: 0.5rem;
++  }
++
++  .hero-star {
++    font-size: 2rem;
++  }
++
++  .hero-subtitle {
++    font-size: 1.1rem;
++  }
++
++  .hero-actions {
++    flex-direction: column;
++    align-items: center;
++  }
++
++  .cta-button {
++    width: 200px;
++    justify-content: center;
++  }
++
++  .features-title {
++    font-size: 2rem;
++  }
++
++  .feature-card {
++    padding: 2rem;
++  }
++}
++
++@media (max-width: 480px) {
++  .home-hero {
++    padding: 2rem 1rem;
++  }
++
++  .hero-title {
++    font-size: 2rem;
++  }
++
++  .features-section {
++    padding: 0 1rem 2rem 1rem;
++  }
++}
+diff --git a/src/pages/HomePage.jsx b/src/pages/HomePage.jsx
+new file mode 100644
+index 0000000..cc3348f
+--- /dev/null
++++ b/src/pages/HomePage.jsx
+@@ -0,0 +1,67 @@
++import { Link } from 'react-router-dom';
++import {
++  CheckCircleOutlined,
++  RocketOutlined,
++  StarFilled,
++} from '@ant-design/icons';
++import './HomePage.css';
++
++const HomePage = () => {
++  return (
++    <div className="home-page">
++      <div className="home-hero">
++        <div className="hero-content">
++          <h1 className="hero-title">
++            Welcome to TodoMaster
++            <StarFilled className="hero-star" />
++          </h1>
++          <p className="hero-subtitle">
++            Organize your life, one task at a time. Beautiful, intuitive, and
++            powerful.
++          </p>
++          <div className="hero-actions">
++            <Link to="/todos" className="cta-button primary">
++              <RocketOutlined className="button-icon" />
++              Get Started
++            </Link>
++            <Link to="/about" className="cta-button secondary">
++              Learn More
++            </Link>
++          </div>
++        </div>
++      </div>
++
++      <div className="features-section">
++        <h2 className="features-title">Why Choose TodoMaster?</h2>
++        <div className="features-grid">
++          <div className="feature-card">
++            <CheckCircleOutlined className="feature-icon" />
++            <h3>Smart Organization</h3>
++            <p>
++              Keep track of all your tasks with our intuitive interface and
++              smart filtering.
++            </p>
++          </div>
++          <div className="feature-card">
++            <RocketOutlined className="feature-icon" />
++            <h3>Boost Productivity</h3>
++            <p>
++              Get more done with features like pagination, move tasks, and quick
++              actions.
++            </p>
++          </div>
++          <div className="feature-card">
++            <StarFilled className="feature-icon" />
++            <h3>Beautiful Design</h3>
++            <p>
++              Enjoy a modern, responsive interface that looks great on any
++              device.
++            </p>
++          </div>
++        </div>
++      </div>
++    </div>
++  );
++};
++
++export default HomePage;
+diff --git a/src/pages/TodosPage.jsx b/src/pages/TodosPage.jsx
+new file mode 100644
+index 0000000..041978f
+--- /dev/null
++++ b/src/pages/TodosPage.jsx
+@@ -0,0 +1,92 @@
++import { useState, useEffect } from 'react';
++import { v4 as uuidv4 } from 'uuid';
++import TodoList from '../components/TodoList/TodoList';
++import TodoForm from '../components/TodoForm/TodoForm';
++
++const TodosPage = () => {
++  const [todos, setTodos] = useState(
++    JSON.parse(localStorage.getItem('todos')) || []
++  );
++  const [todo, setTodo] = useState({ id: null, text: '', completed: false });
++  const [todoFilter, setTodoFilter] = useState('');
++
++  const handleSubmit = (e) => {
++    e.preventDefault();
++    if (todo.text.trim() === '') return;
++    setTodos(todos.concat(todo));
++    setTodo({ id: null, text: '', completed: false });
++  };
++
++  const handleChange = (e) => {
++    setTodo({ id: uuidv4(), text: e.target.value, completed: false });
++  };
++
++  const deleteTodo = (id) => {
++    setTodos((t) => t.filter((todo) => todo.id !== id));
++  };
++
++  const toggleComplete = (id) => {
++    setTodos((t) =>
++      t.map((todo) =>
++        todo.id === id ? { ...todo, completed: !todo.completed } : todo
++      )
++    );
++  };
++
++  const moveTaskUp = (index) => {
++    if (index === 0) return;
++    const updatedTodos = [...todos];
++    updatedTodos[index] = todos[index - 1];
++    updatedTodos[index - 1] = todos[index];
++    setTodos(updatedTodos);
++  };
++
++  const moveTaskDown = (index) => {
++    if (index === todos.length - 1) return;
++    const updatedTodos = [...todos];
++    updatedTodos[index] = todos[index + 1];
++    updatedTodos[index + 1] = todos[index];
++    setTodos(updatedTodos);
++  };
++
++  const runFilter = (e) => {
++    setTodoFilter(e.target.value);
++  };
++
++  const clearAll = () => {
++    setTodos([]);
++    localStorage.removeItem('todos');
++  };
++
++  useEffect(() => {
++    localStorage.setItem('todos', JSON.stringify(todos));
++  }, [todos]);
++
++  const shown =
++    todos.length > 0 &&
++    todos.filter((t) =>
++      t.text.toLowerCase().includes(todoFilter.toLowerCase())
++    );
++
++  return (
++    <div className="todos-page">
++      <TodoForm
++        value={todo.text}
++        onChange={handleChange}
++        onSubmit={handleSubmit}
++      />
++
++      <TodoList
++        toggleComplete={toggleComplete}
++        todos={shown}
++        deleteTodo={deleteTodo}
++        moveUp={moveTaskUp}
++        moveDown={moveTaskDown}
++        clearAll={clearAll}
++        runFilter={runFilter}
++      />
++    </div>
++  );
++};
++
++export default TodosPage;
