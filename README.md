@@ -48,4 +48,4 @@ npm run dev
 ![A sample view of the application with a few tasks added and one crossed out](public/app-preview.png)
 
 ### 🌐 Live Demo
-to be added
+[Todo app](https://todo-app-tan-theta-75.vercel.app/)
