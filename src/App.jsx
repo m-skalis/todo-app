@@ -1,5 +1,7 @@
 import { useState, useEffect} from "react"
 import {v4 as uuidv4} from 'uuid'
+import Input from './components/Input'
+import TodoList from './components/TodoList'
 
 function App() {
   const [todos, setTodos] = useState(JSON.parse(localStorage.getItem("todos")) || [])
@@ -75,32 +77,3 @@ function App() {
 
 export default App
 
-const Input = ({value, onSubmit, onChange}) => {
-  return (
-  <form onSubmit={onSubmit}>
-    <input value={value} onChange={onChange} type="text" placeholder="Enter your todo here..." />
-    <button type='submit'>Add todo</button>
-  </form>
-  )
-}
-
-const TodoList = ({toggleComplete, todos, deleteTodo, moveUp, moveDown}) => {
-  return (
-    <ul className="todo-list">
-      {todos && todos.map((todo, index) => {
-        return (
-        <div className="container" key={todo.id}>
-          <li
-          onClick={() => toggleComplete(todo.id)}
-          className={todo.completed ? "complete" : ""}>
-          {todo.text}
-          </li>
-          <button className="delete-btn" onClick={() => deleteTodo(todo.id)}>&#128465;</button>
-          <button className="arrow-btn" onClick={() => moveUp(index)}>&uarr;</button>
-          <button className="arrow-btn" onClick={() => moveDown(index)}>&darr;</button>
-        </div>
-        )
-      })}
-    </ul>
-  )
-}
